@@ -1,0 +1,35 @@
+.main{
+    width: 800px;
+    min-height: 1300px;
+    position: relative;
+}
+.zoomdiv{
+    position:fixed;
+    bottom: 5px;
+    right: 20px;
+}
+.box{
+    background-color: #27384c;
+    margin: 0;
+    padding: 0;
+    height:200px;
+    width: 200px;
+}
+
+.imgdiv{
+    border: 15px solid white;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+.icondiv{
+    width: 40px;
+    height: 40px; 
+    background-color: #27384c;
+    color: white;
+}
+.dot{
+    width: 10px;
+    height: 10px;
+    background-color: #27384c;
+}

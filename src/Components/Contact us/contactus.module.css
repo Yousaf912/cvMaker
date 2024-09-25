@@ -1,0 +1,33 @@
+.picdiv img{
+    width: 100%;
+    height: 100%;
+}
+
+.bgdiv{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(22, 42, 54, 0.5);
+    top: 0;
+}
+.contactinfo{
+    top: 55%;
+    width: 100%;
+}
+.centerdiv{
+    background: linear-gradient(130deg, #3eadc9, #506bc2  );
+    opacity: 0.95;
+}
+.centerdiv textarea{
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+.mail{
+    text-decoration: none;
+    color: white;
+}
+.mail:hover{
+    color: blue;
+}

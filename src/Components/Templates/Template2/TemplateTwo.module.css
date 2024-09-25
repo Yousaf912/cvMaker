@@ -1,0 +1,10 @@
+.main{
+    width: 800px;
+    height: 1500px;
+    position: relative;
+}
+.zoomdiv{
+    position:fixed;
+    bottom: 5px;
+    right: 20px;
+}

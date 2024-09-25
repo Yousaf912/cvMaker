@@ -1,0 +1,60 @@
+.logo {
+    background: linear-gradient(130deg, #506bc2, #3eadc9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+.nav{
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.icon {
+    color: rgb(80, 107, 194);
+
+}
+a{
+    color:#506bc2;
+}
+
+.navbar li {
+    list-style: none;
+    color: #0d6efd;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    padding: 2px 0px;
+}
+
+
+.logodiv::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    border-bottom: 3px solid rgb(80, 107, 194);
+    border-left: 3px solid rgb(80, 107, 194);
+    height: 15px;
+    width: 15px;
+    left: 0;
+}
+
+.logodiv::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    border-top: 3px solid rgb(80, 107, 194);
+    border-right: 3px solid rgb(80, 107, 194);
+    height: 15px;
+    width: 15px;
+    right: 0;
+}
+.navbar li:hover{
+    color: #0436da;
+}
+.navbar button{
+    background: linear-gradient(130deg, #506bc2, #3eadc9);
+    color: white;
+    border: none ;
+    outline: none;
+}

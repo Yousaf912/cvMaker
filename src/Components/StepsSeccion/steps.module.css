@@ -1,0 +1,20 @@
+.main{
+    background: linear-gradient(130deg, #506bc2, #3eadc9);
+    border-top-right-radius: 300px;
+    border-bottom-left-radius: 300px;
+}
+.card{
+    background-blend-mode: darken;
+    background-color: rgba(216, 224, 235, 0.3);
+}
+.crdicon{
+    width: 60px;
+    height: 60px;
+    border: 3px solid;
+    background-color: #506bc2;
+}
+.main button{
+    background: linear-gradient(130deg, #3eadc9, #506bc2  );
+    outline: none;
+    border: none;
+}
