@@ -1,0 +1,16 @@
+.main {
+    background: linear-gradient(130deg, #506bc2, #3eadc9);
+    height: 100dvh;
+}
+.dot{
+width: 40px;
+height: 40px ;
+border: 2px solid white;
+}
+.hiphen{
+    border-left: 2px dotted white;
+    height: 30px;
+    margin-left:18%;
+}
+
+

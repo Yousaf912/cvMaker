@@ -1,0 +1,20 @@
+.dot {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(58, 140, 207);
+    font-size: larger;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.main {
+    background-color: rgb(212, 228, 241);
+    border-top-right-radius: 150px;
+}
+
+.main button {
+    background: linear-gradient(130deg, #506bc2, #3eadc9);
+    border: none;
+    outline: none;
+    color: white;
+}

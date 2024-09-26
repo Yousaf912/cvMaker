@@ -2,6 +2,8 @@ import  {createBrowserRouter} from 'react-router-dom';
 import App from '../../App.jsx';
 import Main from '../LoginandSignup/main.jsx';
 import Template from '../Templates/template.jsx';
+import Firstpage from '../MakeResumeSession/MakeResumeFirstPage/firstpage.jsx';
+import MainPart from '../BuildingResumeSession/MainPart.jsx';
 
 export const AllRoutes = createBrowserRouter([
     {
@@ -31,5 +33,17 @@ export const AllRoutes = createBrowserRouter([
     {
         path:'/signup',
         element:<Main/>
+    },
+    {
+        path:'/makeResume',
+        element:<Firstpage/>
+    },
+    {
+        path:'/makeResume/personalinfo',
+        element:<MainPart/>
+    },
+    {
+        path:'/makeResume/education',
+        element:<MainPart/>
     },
 ])
