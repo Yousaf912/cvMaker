@@ -1,6 +1,7 @@
 .main {
     background: linear-gradient(130deg, #506bc2, #3eadc9);
     height: 100dvh;
+    position:fixed;
 }
 .dot{
 width: 40px;

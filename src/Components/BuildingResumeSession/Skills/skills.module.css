@@ -1,0 +1,16 @@
+.education h1{
+    background: linear-gradient(130deg, #506bc2 ,#ba1154, #3eadc9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+.education h4{
+    color: #506bc2;
+}
+.main button{
+    background: linear-gradient(130deg, #506bc2 , #3eadc9);
+    border: none;
+    outline: none;
+    color: white;
+}

@@ -46,4 +46,16 @@ export const AllRoutes = createBrowserRouter([
         path:'/makeResume/education',
         element:<MainPart/>
     },
+    {
+        path:'/makeResume/experience',
+        element:<MainPart/>
+    },
+    {
+        path:'/makeResume/skills',
+        element:<MainPart/>
+    },
+    {
+        path:'/makeResume/finalize',
+        element:<MainPart/>
+    },
 ])
