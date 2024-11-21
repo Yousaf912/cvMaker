@@ -4,27 +4,49 @@ import style from "./home.module.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setToken } from '../ReduxStore/Tokenslice';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = sessionStorage.getItem('token');
 
-  useEffect(() => {
-    dispatch(setToken(token))
-  }, [])
+  const getuserinfo = async () => {
+    try {
+      const getUser = await fetch('http://localhost:7000/makeResume', {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }).then(async (res) => {
+        const data = await res.json();
 
-  const toke = useSelector((state)=>{
-    console.log(state.token);
-  })
+        sessionStorage.setItem('userid', data.user._doc._id)
+      })
+    } catch (er) { }
 
-
-  const openlink = () => {
-    navigate('/makeResume')
   }
+
+  useEffect(() => {
+    dispatch(setToken(token));
+    getuserinfo()
+  }, []);
+
+
+
+  const openlink = async () => {
+    const id = sessionStorage.getItem('userid');
+    if (id) {
+
+      navigate('/makeResume')
+    } else {
+      navigate('/login')
+    }
+  }
+
   return (
 
     <div className={`${style.main}`}>
+      <ToastContainer />
       <div className={` container`}>
         <div className={`row justify-content-around mt-5 align-items-center d-flex `}>
           <div className="col-5">

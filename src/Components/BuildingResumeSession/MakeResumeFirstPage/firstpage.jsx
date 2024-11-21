@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../Navbar/Navbar';
 import style from './firstpage.module.css'
 import img from '../../pics/img2.png'
 import { useNavigate } from 'react-router-dom';
+import { setLogedInUser } from '../../ReduxStore/LOgedInUserInfo';
+import { useDispatch, useSelector } from 'react-redux';
 export default function Firstpage() {
-    const navigate = useNavigate();  const getstart = () => { navigate('/makeResume/personalinfo') }
+    const token = sessionStorage.getItem('token')
+    const navigate = useNavigate();
+    const getstart = () => { navigate('/makeResume/selectTemplate') };
+    
+    useEffect(()=>{
+        const id = sessionStorage.getItem('userid');
+        if(!id){
+            navigate('/login')
+        }
+    },[])
+
+
+     
     return (
         <div>
             <Navbar />

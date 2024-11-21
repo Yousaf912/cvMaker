@@ -14,3 +14,10 @@
     outline: none;
     color: white;
 }
+.added button{
+    background: linear-gradient(130deg, #36bb36 , #4ed159);
+    border: none;
+    outline: none;
+    color: white;
+    cursor: not-allowed;
+}

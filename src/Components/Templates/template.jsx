@@ -9,8 +9,8 @@ export default function Template() {
   return (
     <div>
         <Navbar/>
-       {/* <TempleteThree/> */}
-       <TempleteOne/>
+       <TempleteThree/>
+       {/* <TempleteOne/> */}
     </div>
   )
 }

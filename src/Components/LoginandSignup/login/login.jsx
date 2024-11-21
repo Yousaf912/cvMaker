@@ -31,6 +31,7 @@ export default function Login() {
             }).then(async (res)=>{
                 const response = await res.json();
                await sessionStorage.setItem('token',response.token)
+              
               navigate('/')
                 
                 if(response.message){
