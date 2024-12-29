@@ -11,7 +11,7 @@ export default function MainPart() {
   const name = useLocation().pathname.split('/')[2]
   const obj = {
     'personalinfo': <PersonInfo />,
-    'education': <Education />,
+    'education': <Education/>,
     'experience':<Experience/>,
     'skills':<Skills/>,
     'finalize':<Finalize/>

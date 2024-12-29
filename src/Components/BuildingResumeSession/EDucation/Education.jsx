@@ -4,143 +4,129 @@ import { IoIosAddCircle } from "react-icons/io";
 import { useState } from 'react';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 
 
 export default function Education() {
-  const navigate = useNavigate()
-  const [fields, setFields] = useState([]);
-  const addField = () => {
-    setFields([...fields, <InutFields />])
+  const url = import.meta.env.VITE_FETCHING_URL;
+  const id = localStorage.getItem('userid')
+  const [added, setadded] = useState(false)
+  const [eror, seteror] = useState({})
+  const [education, setEducation] = useState({
+    name: '',
+    instituteName: '',
+    startdate: '',
+    enddate: ''
+  });
+  const [data, setAllData] = useState([])
+  const naviagte = useNavigate();
+  useEffect(() => {
+    if (!id) {
+      naviagte('/')
+    }
+  }, [])
+
+
+  const getalldata = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setEducation({
+      ...education,
+      [name]: value
+    })
   }
 
-  const deleteField = (i) => {
-    const newFields = [...fields];
-    newFields.splice(i, 1);
-    setFields(newFields);
-  };
 
-  const experience = () => {
-    navigate('/makeResume/experience')
+  const ad = async () => {
+    try {
+      await fetch(`${url}/addeducation/${id}`, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(education)
+      })
+        .then(async (res) => {
+          const fnal = await res.json();
+          if(fnal.message == 'only 4 education can be added'){
+            toast.error(fnal.message)
+          }else{
+            if (fnal.message == 'validation eror') {
+              seteror(fnal.eror.errors)
+            } else {
+              if (fnal.message == 'this degree is already added') {
+                toast.error(fnal.message)
+              } else {
+  
+                if (fnal.message == 'added') {
+                  toast.success(`${education.name} education is added`)
+                  seteror({})
+                  setEducation({
+                    name: '',
+                    instituteName: '',
+                    startdate: '',
+                    enddate: ''
+                  })
+                }
+              }
+            }
+          }
+
+        })
+    } catch (er) {
+      console.log(er);
+    }
+
   }
 
+  
 
 
   return (
     <div className={` ${style.education} mt-4 p-3`}>
       <h1>Tell us about your education</h1>
       <h4>Enter your education experience so far, even if you are a current student or did not graduate.</h4>
-      <div>
-        <h4>Education 1</h4>
-        <InutFields />
-       
-      </div>
-      {fields.map((val, i) => {
-        return (
-
-          <div className='mt-4' key={i}>
-            <div className='d-flex justify-content-between col-5 mt-5 pt-4'>
-              <h4>Education {i + 2}</h4>
-              <MdOutlineDeleteOutline onClick={() => deleteField(i)} className='fs-1 text-danger' />
-            </div>
-            {val} 
-            </div>
-        )
-      })}
 
 
-      <div className={`mt-5 ${style.main} d-flex  justify-content-center `}>
-        <div onClick={addField} className='d-flex col-2  align-items-center border bg-primary text-white  btn '>
-          More Fields
-          <IoIosAddCircle className='fs-2 ms-2 ' />
-
+      <div className=' d-flex justify-content-between flex-wrap mt-4'>
+        <div className='col-5'>
+          <h6>Degree</h6>
+          <input onChange={getalldata} name='name' value={education.name} type="text" placeholder='degree title ......' style={{ width: '100%' }} />
+          {eror.name && <p className='text-danger'>*{eror.name.message}</p>}
         </div>
-        <button onClick={experience} className='btn py-3 ms-4  px-3 shadow-lg'>
+        <div className='col-5'>
+          <h6>Institute</h6>
+          <input onChange={getalldata} value={education.instituteName} name='instituteName' type="text" placeholder='karachi university....' style={{ width: '100%' }} />
+          {eror.instituteName && <p className='text-danger'>*{eror.instituteName.message}</p>}
+        </div>
+        <div className='col-5 mt-4 d-flex justify-content-between'>
+          <div className='col-5'>
+            <h6>Starting Date</h6>
+            <input onChange={getalldata} value={education.startdate} name='startdate' type="date" style={{ width: '100%' }} />
+            {eror.startdate && <p className='text-danger'>*{eror.startdate.message}</p>}
+          </div>
+          <div className='col-5'>
+            <h6>End Date</h6>
+            <input onChange={getalldata} value={education.enddate} name='enddate' type="date" style={{ width: '100%' }} />
+            {eror.enddate && <p className='text-danger'>*{eror.enddate.message}</p>}
+          </div>
+        </div>
+        <div className={` ${added ? style.added : style.main} text-center mt-3  `}>
+          <button onClick={ad} className={`${style.button} btn py-3  px-3 shadow-lg`}>
+            {added ? 'Added' : 'Add'}
+          </button>
+        </div>
+
+
+      </div>
+      <div className='text-center'>
+        <button onClick={()=>naviagte('/makeResume/experience')} className={`${style.button} btn py-3 ms-4 mt-5 px-3 shadow-lg`}>
           Next to: Experience
         </button>
       </div>
-    </div>
-  )
-}
 
-
-
-function InutFields() {
-  const id = sessionStorage.getItem('userid')
-  const [added,setadded]= useState(false)
-  
-  const  [education,setEducation]=useState({
-    name:'',
-    instituteName:'',
-    startdate:'',
-    enddate:''
-  });
-
-  const getalldata =(e)=>{
-    const name = e.target.name;
-    const value = e.target.value;
-    setEducation({
-      ...education,
-      [name]:value
-    })
-  }
-  
- const ad =async()=>{
-  try {
-    const updated = await fetch(`http://localhost:7000/education/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(education)
-    })
-    const data = await updated.json();
-    console.log(data);
-    
-   if(data.acknowledged){
-    setadded(true)
-   }
-
-
-  } catch (er) { throw er }
-  
- }
-
- console.log(education);
- 
-
-  
-  return (
-    <div>
-      <div className=''>
-
-        <div className=' d-flex justify-content-between flex-wrap mt-4'>
-          <div className='col-5'>
-            <h6>Degree</h6>
-            <input onChange={getalldata} name='name'  type="text" placeholder='degree title ......' style={{ width: '100%' }} />
-          </div>
-          <div className='col-5'>
-            <h6>Institute</h6>
-            <input onChange={getalldata} name='instituteName' type="text" placeholder='karachi university....' style={{ width: '100%' }} />
-          </div>
-          <div className='col-5 mt-4 d-flex justify-content-between'>
-            <div className='col-5'>
-              <h6>Starting Date</h6>
-              <input onChange={getalldata} name='startdate' type="date" style={{ width: '100%' }} />
-            </div>
-            <div className='col-5'>
-              <h6>End Date</h6>
-              <input onChange={getalldata} name='enddate' type="date" style={{ width: '100%' }} />
-            </div>
-          </div>
-          <div className={` ${ added ? style.added : style.main} text-center mt-3  `}>
-              <button onClick={ad}  className={` btn py-3  px-3 shadow-lg`}>
-                {added ? 'Added':'Add'}
-              </button>
-            </div>
-
-        </div>
-      </div>
     </div>
   )
 }

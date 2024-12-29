@@ -39,6 +39,8 @@ export default function Signup() {
                 const fnal = await res.json();
                 
                 if(fnal.message == 'Validation failed'){
+                    console.log(fnal);
+                    
                     setEror(fnal.errors)
                 }
                 if(res.ok){

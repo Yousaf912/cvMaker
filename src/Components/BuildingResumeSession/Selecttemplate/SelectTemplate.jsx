@@ -4,7 +4,6 @@ import img2 from '../../../assets/pic2.png'
 import Navbar from '../../Navbar/Navbar'
 import { TiTickOutline } from "react-icons/ti";
 import { toast, ToastContainer } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
