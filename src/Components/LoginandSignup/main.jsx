@@ -22,12 +22,12 @@ export default function Main() {
         <div className={`${style.maindiv} mt-5 pt-4`}>
             <div className="container">
                 <div className="row">
-                    <div className='d-flex '>
-                        <div className={`${style.data} col-6 p-3 rounded-4`}>
+                    <div className='d-md-flex '>
+                        <div className={`${style.data} col-md-6 p-3 rounded-4 `}>
                             {element}
                         </div>
-                        <div className="col-6">
-                            <img src={img} />
+                        <div className="col-md-6 d-none d-md-block">
+                            <img src={img} style={{width:'100%'}} />
                         </div>
                     </div>
                 </div>

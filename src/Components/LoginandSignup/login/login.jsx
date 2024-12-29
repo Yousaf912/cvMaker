@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
+const url = import.meta.env.VITE_FETCHING_URL;
 
 export default function Login() {
     const navigate =useNavigate()
@@ -21,30 +22,32 @@ export default function Login() {
     const login =async (e) => {
         e.preventDefault();
         try{
-
-           await fetch('http://localhost:7000/login', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
+            await fetch(`${url}/login`,{
+                method:'POST',
+                headers:{
+                    "Content-Type":"application/json"
                 },
-                body: JSON.stringify(data)
-            }).then(async (res)=>{
-                const response = await res.json();
-               await sessionStorage.setItem('token',response.token)
+                body:JSON.stringify(data)
+            }).then(async(res)=>{
+                const fnal =await res.json();
               
-              navigate('/')
-                
-                if(response.message){
-                    toast.error(response.message)
+                if(res.ok){
+                   await localStorage.setItem('token',fnal.token);
+                   navigate('/')
+                }else{
+                   toast.error(fnal.message)
+                    
                 }
                 
             })
+
+          
         }catch(er){throw er}
     }
 
     return (
         <div>
-            <ToastContainer/>
+           <ToastContainer/>
             <h1 className='text-center text-white'>Login</h1>
             <div className='text-white mt-5'>
                 <form onSubmit={login}>

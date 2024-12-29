@@ -16,7 +16,7 @@ export default function Navbar() {
                 <div className="row">
                     <div className={` ${style.navbar} mt-1  d-flex justify-content-between align-items-center`}>
                         {/* --------------------------------- logo start ----------------------------- */}
-                        <div className={`position-relative  col-2  p-1 mt-1 `}>
+                        <div className={`position-relative  col-md-2 col-5  p-1 mt-1 `}>
                             <div  onClick={()=>open('')} className={`d-flex align-items-center justify-content-evenly ${style.logodiv} `}>
                                 <HiOutlineNewspaper className={`fs-1 ${style.icon}`} />
                                 <h2 className={`${style.logo}`}>
@@ -25,7 +25,7 @@ export default function Navbar() {
 
                         </div>
                         {/* ------------------------------------ buttons----------------------------- */}
-                        <div className="col-6 mt-4">
+                        <div className="col-6 mt-4 d-none d-md-block">
                             <ul className='d-flex justify-content-evenly position-relative'>
                                 <li onClick={()=>open('home')}>Home</li>
                                 <li onClick={()=>open('templates')}>Templates</li>
@@ -37,7 +37,7 @@ export default function Navbar() {
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-1">
+                        <div className="col-lg-1 col-2">
                             <button className='btn px-4 '>
                                 <NavLink className={style.nav}  to={'/login'}>Login</NavLink>
                             </button>

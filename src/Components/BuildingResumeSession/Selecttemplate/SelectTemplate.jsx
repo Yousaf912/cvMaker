@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router-dom';
 export const SelectTemplate = () => {
     const [templateName, setTemplateName] = useState('');
     const navigate = useNavigate()
-    const id = sessionStorage.getItem('userid');
+    const id = localStorage.getItem('userid');
+    const url = import.meta.env.VITE_FETCHING_URL;
 
     useEffect(()=>{
         if(!id){
@@ -43,22 +44,23 @@ export const SelectTemplate = () => {
         } else {
 
             try{
-                const res =await fetch(`http://localhost:7000/userid/${id}`,{
-                    method:'PUT',
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify({
-                        template:templateName
-                    })
-                })
-                const data = await res.json();
-                if(data.acknowledged){
+               await fetch(`${url}/addtemplate/${id}`,{
+                method:'PUT',
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({template:templateName})
+               }).then(async(res)=>{
+                const fnal = await res.json();
+                if(fnal.acknowledged){
                     navigate('/makeResume/personalinfo')
                 }
                 
+               })
+                
             }catch(er){
-                throw er
+                console.log(er);
+                
             }
         }
        

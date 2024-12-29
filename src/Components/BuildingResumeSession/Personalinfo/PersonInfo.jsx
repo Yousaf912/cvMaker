@@ -10,7 +10,7 @@ export default function PersonInfo() {
   const [facebook, setfacebook] = useState(false);
   const [linkedin, setLinkedin] = useState(false);
   const [website, setWebsite] = useState(false);
-  const id = sessionStorage.getItem('userid')
+  const id = localStorage.getItem('userid')
   const navigate = useNavigate()
  
 
@@ -39,7 +39,7 @@ export default function PersonInfo() {
   const sendAllData = async () => {
 
     try {
-      const updated = await fetch(`http://localhost:7000/personalinfo/${id}`, {
+      const updated = await fetch(`http://localhost:9000/personalinfo/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

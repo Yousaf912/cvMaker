@@ -23,9 +23,9 @@ export default function ContectUs() {
                     <div className="row text-white">
                         <div className={`${style.centerdiv} rounded-4 p-3 mb-5 shadow-lg `}>
                             <h1 className='text-center mt-2'>Contact Us</h1>
-                            <div className='d-flex justify-content-between align-items-center' >
+                            <div className='d-md-flex justify-content-between align-items-center' >
 
-                                <div className="col-5">
+                                <div className="col-md-5">
                                     <form>
                                         <div className="mb-3">
                                             <label htmlFor="name" className="form-label">Name</label>
@@ -44,7 +44,7 @@ export default function ContectUs() {
                                         </div>
                                     </form>
                                 </div>
-                                <div className="col-5">
+                                <div className="col-md-5">
                                     <div className='d-flex '>
                                         <HiOutlineMailOpen className='fs-1' />
                                         <a className={`${style.mail} mt-2 ms-4 `} href="mailto:yousafva9@gmail.com">yousafva9@gmail.com</a>

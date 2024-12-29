@@ -11,7 +11,7 @@ export default function Firstpage() {
     const getstart = () => { navigate('/makeResume/selectTemplate') };
     
     useEffect(()=>{
-        const id = sessionStorage.getItem('userid');
+        const id = localStorage.getItem('userid');
         if(!id){
             navigate('/login')
         }

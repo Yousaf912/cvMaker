@@ -9,6 +9,7 @@ import Steps from "./Components/StepsSeccion/Steps"
 function App() {
 
   return (
+
     <>
      <Navbar/>
      <Home/>
