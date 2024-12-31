@@ -7,11 +7,11 @@ import { AllRoutes } from './Components/Routes/Allroutes.jsx'
 import { Provider } from 'react-redux'
 import store from './Components/ReduxStore/ReduxStore.js'
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify'
+
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <ToastContainer />
+    
     <RouterProvider router={AllRoutes}></RouterProvider>
   </Provider>
 )

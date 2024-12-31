@@ -4,7 +4,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { useState } from 'react';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 
@@ -86,6 +86,7 @@ export default function Education() {
 
   return (
     <div className={` ${style.education} mt-4 p-3`}>
+      <ToastContainer />
       <h1>Tell us about your education</h1>
       <h4>Enter your education experience so far, even if you are a current student or did not graduate.</h4>
 

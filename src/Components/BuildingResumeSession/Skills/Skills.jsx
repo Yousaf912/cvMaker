@@ -4,7 +4,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { useState } from 'react';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 
@@ -13,7 +13,8 @@ import { toast } from 'react-toastify';
 
 export default function Skills() {
     const id = localStorage.getItem('userid');
-    const [eror, seteror] = useState({})
+    const [eror, seteror] = useState({});
+    const navigate = useNavigate();
 
     const [data, setdata] = useState({
         title: '',
@@ -74,6 +75,7 @@ export default function Skills() {
 
     return (
         <div className={` ${style.education} mt-4 p-3  `}>
+            <ToastContainer />
             <h1>What skills would you like to highlight?</h1>
             <h4>Choose from our pre-written examples below or write your own. Tell us your experirnce where do you skills </h4>
             <div className=''>
@@ -110,7 +112,7 @@ export default function Skills() {
                 </div>
             </div>
             <div className={`mt-5 ${style.main} text-center  `}>
-                <button className='btn py-3  px-3 shadow-lg'>
+                <button onClick={()=>navigate('/makeResume/finalize')} className='btn py-3  px-3 shadow-lg'>
                     Next to: FInalize
                 </button>
             </div>

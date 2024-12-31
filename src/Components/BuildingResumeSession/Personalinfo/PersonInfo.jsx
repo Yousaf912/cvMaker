@@ -31,7 +31,8 @@ export default function PersonInfo() {
     email: '',
     facebook: '',
     linkedin: '',
-    website: ''
+    website: '',
+    description:''
   });
 
   const getData = (e) => {
@@ -130,6 +131,11 @@ export default function PersonInfo() {
               <h6>Email</h6>
               <input onChange={getData} name='email' type="email" placeholder='yousafva9@gmail.com' className='py-2' style={{ width: '100%' }} />
               {erros.email && <p className='text-danger'>*{erros.email.message}</p> }
+            </div>
+            <div className='col-12 mt-2'>
+              <h6>Tell about yourself in 210 words</h6>
+            <textarea onChange={getData} name="description" rows={5} className='rounded-3 p-1' style={{width:'100%'}}></textarea>
+            {erros.description && <p className='text-danger'>*{erros.description.message}</p> }
             </div>
             {facebook && <div className='col-5 mt-2'>
               <div>

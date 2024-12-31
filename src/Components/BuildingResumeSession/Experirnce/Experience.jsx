@@ -4,13 +4,14 @@ import { IoIosAddCircle } from "react-icons/io";
 import { useState } from 'react';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 
 
 export default function Experience() {
     const id = localStorage.getItem('userid');
+    const url = import.meta.env.VITE_FETCHING_URL;
     const navigate = useNavigate();
     const [eror, seteror] = useState({});
 
@@ -39,26 +40,29 @@ export default function Experience() {
     }
 
     const add = async () => {
-        const url = import.meta.env.VITE_FETCHING_URL;
+        
         try {
-            await fetch(`${url}/addexperince/${id}`, {
+            const res = await fetch(`${url}/addexperince/${id}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
-            }).then(async (res) => {
-                const fnal = await res.json();
-                console.log(fnal);
-                if (fnal.message == 'validation eror') {
-                    seteror(fnal.eror.errors)
-                } else {
-                    if (fnal.message == 'data can not be exceed more than 5') {
-                        toast.error(fnal.message)
-                    }
-                    if (fnal.message == 'added') {
-                        toast.success('experience is added')
-                        seteror({});
+            });
+    
+            const fnal = await res.json();
+            console.log(fnal);
+    
+            if (fnal.message === 'validation eror') {
+                seteror(fnal.eror.errors);  
+            } else {
+                switch (fnal.message) {
+                    case 'data can not be exceed more than 5':
+                        toast.error(fnal.message);
+                        break;
+                    case 'added':
+                        toast.success('Experience is added');
+                        seteror({});  
                         setdata({
                             title: '',
                             office: '',
@@ -66,19 +70,22 @@ export default function Experience() {
                             startingDate: '',
                             endDate: ''
                         });
-
-                    }
+                        break;
+                    default:
+                        console.error('Unexpected message:', fnal.message);  
+                        break;
                 }
-
-            })
+            }
+    
         } catch (er) {
-            console.log(er);
+            console.error('Error during the fetch:', er);  
         }
     }
-
+    
 
     return (
         <div className={` ${style.education} mt-4 p-3  `}>
+            <ToastContainer />
             <h1>Tell us about your most recent job</h1>
             <h4>We’ll start there and work backward. Tell us your experirnce where do you work </h4>
             <div className=''>
