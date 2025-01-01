@@ -14,6 +14,7 @@ export default function Experience() {
     const url = import.meta.env.VITE_FETCHING_URL;
     const navigate = useNavigate();
     const [eror, seteror] = useState({});
+    
 
     useEffect(() => {
         if (!id) {
@@ -62,6 +63,7 @@ export default function Experience() {
                         break;
                     case 'added':
                         toast.success('Experience is added');
+
                         seteror({});  
                         setdata({
                             title: '',
@@ -120,6 +122,7 @@ export default function Experience() {
                     </div>
 
                 </div>
+                
                 <div className={` ${style.main} mt-4  text-center mt-3  `}>
                     <button onClick={add} className={` btn py-3 mt-4  px-3 shadow-lg`}>
                         Add

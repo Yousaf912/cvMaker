@@ -10,7 +10,7 @@ export default function PersonInfo() {
   const [facebook, setfacebook] = useState(false);
   const [linkedin, setLinkedin] = useState(false);
   const [website, setWebsite] = useState(false);
-  const [erros,seterros]=useState({})
+  const [erros, seterros] = useState({})
   const id = localStorage.getItem('userid')
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
@@ -32,7 +32,8 @@ export default function PersonInfo() {
     facebook: '',
     linkedin: '',
     website: '',
-    description:''
+    description: '',
+    secdescription:''
   });
 
   const getData = (e) => {
@@ -43,6 +44,8 @@ export default function PersonInfo() {
       [name]: value
     })
   }
+
+
 
   const sendAllData = async () => {
 
@@ -56,7 +59,7 @@ export default function PersonInfo() {
       })
       const data = await updated.json();
       console.log(data);
-      if(data.message == 'Validation failed'){
+      if (data.message == 'Validation failed') {
         seterros(data.errors)
       }
       if (data.message == 'Added') {
@@ -68,7 +71,7 @@ export default function PersonInfo() {
   }
 
 
-  
+
 
   return (
     <div className={`${style.personinfo} mt-5 px-3 mb-5`}>
@@ -92,12 +95,12 @@ export default function PersonInfo() {
             <div className='col-5'>
               <h6>FirstName</h6>
               <input onChange={getData} name='name' type="text" placeholder='Yousaf ...' className='py-2' style={{ width: '100%' }} />
-            {erros.name && <p className='text-danger'>*{erros.name.message}</p> }
+              {erros.name && <p className='text-danger'>*{erros.name.message}</p>}
             </div>
             <div className='col-5'>
               <h6>SurName</h6>
               <input onChange={getData} name='surname' type="text" placeholder='shafique ...' className='py-2' style={{ width: '100%' }} />
-              {erros.surname && <p className='text-danger'>*{erros.surname.message}</p> }
+              {erros.surname && <p className='text-danger'>*{erros.surname.message}</p>}
             </div>
           </div>
 
@@ -105,18 +108,18 @@ export default function PersonInfo() {
             <div className='col-5'>
               <h6>Address</h6>
               <input onChange={getData} name='address' type="text" placeholder='30N Gould street Usa' className='py-2' style={{ width: '100%' }} />
-              {erros.address && <p className='text-danger'>*{erros.address.message}</p> }
+              {erros.address && <p className='text-danger'>*{erros.address.message}</p>}
             </div>
             <div className='col-5 d-flex justify-content-between'>
               <div className='col-5'>
                 <h6>Postal Code</h6>
                 <input onChange={getData} name='postalcode' type="number" placeholder='5930..' className='py-2' style={{ width: '100%' }} />
-                {erros.postalcode && <p className='text-danger'>*{erros.postalcode.message}</p> }
+                {erros.postalcode && <p className='text-danger'>*{erros.postalcode.message}</p>}
               </div>
               <div className='col-5'>
                 <h6>Country</h6>
                 <input onChange={getData} name='country' type="text" placeholder='USA' className='py-2' style={{ width: '100%' }} />
-                {erros.country && <p className='text-danger'>*{erros.country.message}</p> }
+                {erros.country && <p className='text-danger'>*{erros.country.message}</p>}
               </div>
             </div>
           </div>
@@ -125,18 +128,25 @@ export default function PersonInfo() {
             <div className='col-5'>
               <h6>Number</h6>
               <input onChange={getData} name='number' type="number" placeholder='+9237364543' className='py-2' style={{ width: '100%' }} />
-              {erros.number && <p className='text-danger'>*{erros.number.message}</p> }
+              {erros.number && <p className='text-danger'>*{erros.number.message}</p>}
             </div>
             <div className='col-5'>
               <h6>Email</h6>
               <input onChange={getData} name='email' type="email" placeholder='yousafva9@gmail.com' className='py-2' style={{ width: '100%' }} />
-              {erros.email && <p className='text-danger'>*{erros.email.message}</p> }
+              {erros.email && <p className='text-danger'>*{erros.email.message}</p>}
             </div>
+
             <div className='col-12 mt-2'>
               <h6>Tell about yourself in 210 words</h6>
-            <textarea onChange={getData} name="description" rows={5} className='rounded-3 p-1' style={{width:'100%'}}></textarea>
-            {erros.description && <p className='text-danger'>*{erros.description.message}</p> }
+              <textarea onChange={getData} name="description" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
+              {erros.description && <p className='text-danger'>*{erros.description.message}</p>}
             </div>
+            <div className='col-12 mt-2'>
+              <h6>Tell about your work,experience,skills</h6>
+              <textarea onChange={getData} name="secdescription" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
+              {erros.secdescription && <p className='text-danger'>*{erros.secdescription.message}</p>}
+            </div>
+
             {facebook && <div className='col-5 mt-2'>
               <div>
                 <div className='d-flex justify-content-between'>

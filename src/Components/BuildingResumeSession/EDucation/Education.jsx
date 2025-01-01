@@ -13,7 +13,9 @@ export default function Education() {
   const url = import.meta.env.VITE_FETCHING_URL;
   const id = localStorage.getItem('userid')
   const [added, setadded] = useState(false)
-  const [eror, seteror] = useState({})
+  const [eror, seteror] = useState({});
+
+  
   const [education, setEducation] = useState({
     name: '',
     instituteName: '',
@@ -61,7 +63,8 @@ export default function Education() {
               } else {
   
                 if (fnal.message == 'added') {
-                  toast.success(`${education.name} education is added`)
+                  toast.success(`${education.name} education is added`);
+
                   seteror({})
                   setEducation({
                     name: '',

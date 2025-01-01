@@ -15,6 +15,7 @@ export default function Skills() {
     const id = localStorage.getItem('userid');
     const [eror, seteror] = useState({});
     const navigate = useNavigate();
+   
 
     const [data, setdata] = useState({
         title: '',
