@@ -1,7 +1,9 @@
 .main{
     width: 800px;
-    min-height: 1300px;
+    max-height: 1122px;
     position: relative;
+
+   
 }
 .zoomdiv{
     position:fixed;
@@ -32,4 +34,8 @@
     width: 10px;
     height: 10px;
     background-color: #27384c;
+}
+
+.scle{
+    scale: 0.9;
 }

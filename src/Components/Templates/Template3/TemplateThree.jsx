@@ -24,7 +24,8 @@ export default function TempleteThree() {
         }
     }, [])
 
-    
+
+    console.log(alldata);
 
 
 
@@ -92,26 +93,9 @@ export default function TempleteThree() {
 
                                 </div>
 
-                                {/* ---------------------------------------- language ----------------------------------------- */}
 
-                                <div>
-                                    <h4>Job Experience</h4>
-                                    {alldata.experience.map((val, i) => {
-                                        return (
-                                            <div key={i}>
-                                                <div  className='d-flex  align-items-center'>
-                                                    <div className={`${style.dot} me-3 rounded`}></div>
-                                                    <h4>{val.title}</h4>
-                                                </div>
-                                                <div className='ms-3'>
-                                                    {val.startingDate} - {val.endDate}
-                                                    <p>Address:{val.address}</p>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
 
-                                </div>
+
 
 
 
@@ -133,7 +117,7 @@ export default function TempleteThree() {
                             <div className={`${style.data} ps-3`}>
                                 <div>
                                     <h4>Discription</h4>
-                                    <p>lorem</p>
+                                    <p>{alldata.personalinfo[0].secdescription}</p>
                                 </div>
 
 
@@ -159,6 +143,26 @@ export default function TempleteThree() {
 
                                 </div>
 
+                                {/* ------------------------------------ experience ----------------------------------------- */}
+
+                                <div>
+                                    <h4>Job Experience</h4>
+                                    {alldata.experience.map((val, i) => {
+                                        return (
+                                            <div key={i}>
+                                                <div className='d-flex  align-items-center'>
+                                                    <div className={`${style.dot} me-3 rounded`}></div>
+                                                    <h4>{val.title}</h4>
+                                                </div>
+                                                <div className='ms-3'>
+                                                    {val.startingDate} - {val.endDate}
+                                                    <p>Address:{val.address}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+
+                                </div>
 
 
 

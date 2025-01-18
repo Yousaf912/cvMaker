@@ -9,9 +9,6 @@ export default function Sidebar() {
     const navigate = useNavigate();
     const location = useLocation().pathname.split('/')[2];
    
-    
-    
-
     const open = () => {
         navigate('/')
     };

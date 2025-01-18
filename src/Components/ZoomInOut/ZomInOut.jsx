@@ -11,12 +11,15 @@ const ZoomInOut = () => {
     const dispatch = useDispatch()
     const [zoomLevel, setZoomLevel] = useState(1);
 
+    const minZoomLevel = 0.4; 
+    const maxZoomLevel = 1.1;  
+    
     const handleZoomIn = () => {
-        setZoomLevel(prev => prev + 0.1);
+        setZoomLevel(prev => (prev < maxZoomLevel ? prev + 0.1 : prev));
     };
-
+    
     const handleZoomOut = () => {
-        setZoomLevel(prev => (prev > 0.1 ? prev - 0.1 : prev));
+        setZoomLevel(prev => (prev > minZoomLevel ? prev - 0.1 : prev));
     };
 
     useEffect(()=>{
@@ -29,13 +32,13 @@ const ZoomInOut = () => {
 
         <div className='d-flex justify-content-between align-items-center  ' style={{width:'100%'}}>
 
-            <div onClick={handleZoomIn} className='p-2 rounded-circle text-white bg-primary'>
+            <button onClick={handleZoomIn} style={{cursor:'pointer',border:'none',outline:'none'}} className='p-2 me-3 rounded-circle text-white bg-primary'>
                 <TfiZoomIn className='fs-4' />
-            </div>
+            </button>
             <span className='text-primary'>ZoomIn / ZoomOut</span>
-            <div onClick={handleZoomOut} className='p-2 rounded-circle text-white bg-primary'>
+            <button onClick={handleZoomOut} style={{cursor:'pointer',border:'none',outline:'none'}} className='p-2 ms-3 rounded-circle text-white bg-primary'>
                 <TfiZoomOut className='fs-4 ' />
-            </div>
+            </button>
         </div>
 
 
