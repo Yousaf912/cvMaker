@@ -9,6 +9,7 @@ const url = import.meta.env.VITE_FETCHING_URL;
 
 export default function Home() {
   const navigate = useNavigate();
+  const id = localStorage.getItem('userid');
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
   
@@ -37,7 +38,6 @@ export default function Home() {
 
 
   const openlink = async () => {
-    const id = localStorage.getItem('userid');
    
     if (id) {
       navigate('/makeResume')

@@ -1,10 +1,12 @@
-import  {createBrowserRouter} from 'react-router-dom';
+import  {createBrowserRouter, Navigate} from 'react-router-dom';
 import App from '../../App.jsx';
 import Main from '../LoginandSignup/main.jsx';
 import Template from '../Templates/template.jsx';
 import Firstpage from '../BuildingResumeSession/MakeResumeFirstPage/firstpage.jsx'
 import MainPart from '../BuildingResumeSession/MainPart.jsx';
 import { SelectTemplate } from '../BuildingResumeSession/Selecttemplate/SelectTemplate.jsx';
+const id = localStorage.getItem('userid');
+
 
 export const AllRoutes = createBrowserRouter([
     {
@@ -37,27 +39,27 @@ export const AllRoutes = createBrowserRouter([
     },
     {
         path:'/makeResume',
-        element:<Firstpage/>
+        element: <Firstpage/>
     },
-    {
+    { 
         path:'/makeResume/personalinfo',
-        element:<MainPart/>
+        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/education',
-        element:<MainPart/>
+        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/experience',
-        element:<MainPart/>
+        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/skills',
-        element:<MainPart/>
+        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/finalize',
-        element:<MainPart/>
+        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/selectTemplate',

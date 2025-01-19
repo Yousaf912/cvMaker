@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { FaRegEdit } from "react-icons/fa";
 
 
 
@@ -14,13 +15,38 @@ export default function Experience() {
     const url = import.meta.env.VITE_FETCHING_URL;
     const navigate = useNavigate();
     const [eror, seteror] = useState({});
-    
+    const [indicator, setindicator] = useState(false);
+    const [userExperience, setuserexperience] = useState([]);
+    const [edit, setedit] = useState(false);
+    const [arr,setarr]=useState()
+
 
     useEffect(() => {
-        if (!id) {
-            navigate('/')
+
+        const getalldata = async () => {
+            try {
+                await fetch(`${url}/userdata/${id}`)
+                    .then(async (res) => {
+                        const fnal = await res.json();
+
+                        if (fnal.userdata.experience.length != 0) {
+                            setuserexperience(fnal.userdata.experience)
+                        }
+
+                    })
+
+            } catch (er) {
+                console.log(er);
+            }
         }
-    }, []);
+        getalldata();
+
+    }, [indicator]);
+
+
+
+
+
 
     const [data, setdata] = useState({
         title: '',
@@ -41,7 +67,7 @@ export default function Experience() {
     }
 
     const add = async () => {
-        
+
         try {
             const res = await fetch(`${url}/addexperince/${id}`, {
                 method: 'PUT',
@@ -50,12 +76,12 @@ export default function Experience() {
                 },
                 body: JSON.stringify(data)
             });
-    
+
             const fnal = await res.json();
             console.log(fnal);
-    
+
             if (fnal.message === 'validation eror') {
-                seteror(fnal.eror.errors);  
+                seteror(fnal.eror.errors);
             } else {
                 switch (fnal.message) {
                     case 'data can not be exceed more than 5':
@@ -64,7 +90,7 @@ export default function Experience() {
                     case 'added':
                         toast.success('Experience is added');
 
-                        seteror({});  
+                        seteror({});
                         setdata({
                             title: '',
                             office: '',
@@ -74,16 +100,93 @@ export default function Experience() {
                         });
                         break;
                     default:
-                        console.error('Unexpected message:', fnal.message);  
+                        console.error('Unexpected message:', fnal.message);
                         break;
                 }
             }
-    
+
         } catch (er) {
-            console.error('Error during the fetch:', er);  
+            console.error('Error during the fetch:', er);
         }
     }
-    
+
+
+    const update = (num) => {
+        const slected = userExperience[num];
+        setedit(true);
+        setarr(num)
+        setdata(
+            {
+                title: slected.title,
+                office: slected.office,
+                address: slected.address,
+                startingDate: slected.startingDate,
+                endDate: slected.endDate
+            }
+        )
+
+    };
+
+
+    const deletexperience = async (num) => {
+        try {
+            await fetch(`${url}/deletexperience/${id}/${num}`, {
+                method: 'DELETE',
+
+            }).then(async (res) => {
+                const fnal = await res.json();
+                if (fnal.message == 'experience is deleted') {
+                    toast.success(fnal.message);
+                    setindicator(!indicator)
+                }
+            })
+        } catch (er) {
+            console.log(er);
+        }
+
+    }
+
+
+    const editext = async () => {
+
+
+        try {
+            await fetch(`${url}/editexperience/${id}/${arr}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }
+            ).then(async (res) => {
+                const fnal = await res.json();
+                if (fnal.message == 'validation eror') {
+                    seteror(fnal.eror.errors)
+                } else {
+                    if (fnal.message == 'edited') {
+                        toast.success("Experience is updated");
+                        setindicator(!indicator)
+                        seteror('');
+                        setedit(false)
+                        setdata(
+                            {
+                                title: '',
+                                office: '',
+                                address: '',
+                                startingDate: '',
+                                endDate: ''
+                            }
+                        )
+
+                    }
+
+                }
+
+            })
+
+        } catch (er) { console.log(er); }
+    }
 
     return (
         <div className={` ${style.education} mt-4 p-3  `}>
@@ -122,12 +225,41 @@ export default function Experience() {
                     </div>
 
                 </div>
-                
+
                 <div className={` ${style.main} mt-4  text-center mt-3  `}>
-                    <button onClick={add} className={` btn py-3 mt-4  px-3 shadow-lg`}>
-                        Add
-                    </button>
+                    {!edit ?
+                        <button onClick={add} className={`${style.button} btn py-3  px-3 shadow-lg`}>
+                            Add
+                        </button> :
+                        <button onClick={editext} className={`${style.button2} btn py-3  px-3 shadow-lg`}>
+                            Edit
+                        </button>
+                    }
                 </div>
+                {userExperience.length != 0 &&
+                    <div className={`d-flex flex-wrap justify-content-between  `}>
+                        {userExperience.map((val, i) =>
+                            <div key={i} className='d-flex flex-column col-5 '>
+
+                                <div className={`mt-3  border-3 rounded-4  p-2 shadow ${style.educationlist} `}>
+
+                                    <h5 className='text-center text-primary'>{val.title}</h5>
+                                    <h6>Office: {val.office} </h6>
+                                    <h6>Address: {val.address} </h6>
+                                    <h6>StartDate: {val.startingDate} </h6>
+                                    <h6>EndDate: {val.endDate} </h6>
+
+                                </div>
+                                <div className='pt-2 text-center'>
+                                    <FaRegEdit onClick={() => update(i)} className='fs-3 text-success' style={{ cursor: 'pointer' }} />
+                                    <MdOutlineDeleteOutline onClick={()=>deletexperience(i)} className='fs-2 text-danger ms-2' style={{ cursor: 'pointer' }} />
+
+                                </div>
+                            </div>
+
+                        )}
+                    </div>
+                }
             </div>
             <div className={`mt-5 ${style.main} text-center  `}>
                 <button onClick={() => navigate('/makeResume/skills')} className='btn py-3  px-3 shadow-lg'>

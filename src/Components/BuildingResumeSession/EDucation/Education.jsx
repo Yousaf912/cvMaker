@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react';
 import style from './education.module.css'
-import { IoIosAddCircle } from "react-icons/io";
 import { useState } from 'react';
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+
 
 
 
 
 export default function Education() {
   const url = import.meta.env.VITE_FETCHING_URL;
+  const [edit, setedit] = useState(false)
   const id = localStorage.getItem('userid')
   const [added, setadded] = useState(false)
   const [eror, seteror] = useState({});
+  const [userEducation, setUserEducation] = useState([]);
+  const [arr, setarr] = useState();
+  const [indicator,setindicator]=useState(false)
 
-  
+
   const [education, setEducation] = useState({
     name: '',
     instituteName: '',
@@ -28,7 +33,31 @@ export default function Education() {
     if (!id) {
       naviagte('/')
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+
+    const getalldata = async () => {
+      try {
+        await fetch(`${url}/userdata/${id}`)
+          .then(async (res) => {
+            const fnal = await res.json();
+
+            if (fnal.userdata.education.length != 0) {
+              setUserEducation(fnal.userdata.education)
+            }
+
+          })
+
+      } catch (er) {
+        console.log(er);
+      }
+    }
+    getalldata();
+
+
+
+  }, [indicator]);
 
 
   const getalldata = (e) => {
@@ -39,6 +68,7 @@ export default function Education() {
       [name]: value
     })
   }
+
 
 
   const ad = async () => {
@@ -52,17 +82,18 @@ export default function Education() {
       })
         .then(async (res) => {
           const fnal = await res.json();
-          if(fnal.message == 'only 4 education can be added'){
+          if (fnal.message == 'only 4 education can be added') {
             toast.error(fnal.message)
-          }else{
+          } else {
             if (fnal.message == 'validation eror') {
               seteror(fnal.eror.errors)
             } else {
               if (fnal.message == 'this degree is already added') {
                 toast.error(fnal.message)
               } else {
-  
+
                 if (fnal.message == 'added') {
+                  setindicator(!indicator)
                   toast.success(`${education.name} education is added`);
 
                   seteror({})
@@ -84,7 +115,77 @@ export default function Education() {
 
   }
 
-  
+  const update = (num) => {
+    const slected = userEducation[num];
+    setedit(true)
+    setarr(num)
+    setEducation({
+      name: slected.name,
+      instituteName: slected.instituteName,
+      startdate: slected.startdate,
+      enddate: slected.enddate
+    })
+
+  };
+
+  const editext = async () => {
+
+
+    try {
+      await fetch(`${url}/editeducation/${id}/${arr}`,
+        {
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(education)
+        }
+      ).then(async (res) => {
+        const fnal = await res.json();
+        if (fnal.message == 'validation eror') {
+          seteror(fnal.eror.errors)
+        } else {
+          if (fnal.message == 'edited') {
+            toast.success("Education is updated");
+            setindicator(!indicator)
+            seteror('');
+            setedit(false)
+            setEducation(
+              {
+                name: '',
+                instituteName: '',
+                startdate: '',
+                enddate: ''
+              }
+            )
+
+          }
+
+        }
+
+      })
+
+    } catch (er) { console.log(er); }
+  }
+
+
+  const deleteducation = async (num) => {
+    try {
+     await  fetch(`${url}/deleteducation/${id}/${num}`, {
+        method: 'DELETE',
+        
+      }).then(async(res)=>{
+        const fnal = await res.json();
+        if(fnal.message == 'education is deleted'){
+          toast.success(fnal.message);
+          setindicator(!indicator)
+        }
+      })
+    } catch (er) {
+      console.log(er);
+    }
+
+  }
 
 
   return (
@@ -118,15 +219,46 @@ export default function Education() {
           </div>
         </div>
         <div className={` ${added ? style.added : style.main} text-center mt-3  `}>
-          <button onClick={ad} className={`${style.button} btn py-3  px-3 shadow-lg`}>
-            {added ? 'Added' : 'Add'}
-          </button>
+          {!edit ?
+            <button onClick={ad} className={`${style.button} btn py-3  px-3 shadow-lg`}>
+              {added ? 'Added' : 'Add'}
+            </button> :
+            <button onClick={editext} className={`${style.button2} btn py-3  px-3 shadow-lg`}>
+              {added ? 'Edited' : 'Edit'}
+            </button>
+          }
         </div>
 
 
       </div>
+
+      {userEducation.length != 0 &&
+        <div className={`d-flex flex-wrap justify-content-between mt-5 `}>
+          {userEducation.map((val, i) =>
+            <div key={i} className='d-flex flex-column col-5 '>
+
+              <div className={`mt-3  border-3 rounded-4  p-2 shadow ${style.educationlist} `}>
+
+                <h5 className='text-center text-primary'>{val.name}</h5>
+                <h6>Institute: {val.instituteName} </h6>
+                <h6>StartDate: {val.startdate} </h6>
+                <h6>EndDate: {val.enddate} </h6>
+
+              </div>
+              <div className='pt-2 text-center'>
+                <FaRegEdit onClick={() => update(i)} className='fs-3 text-success' style={{ cursor: 'pointer' }} />
+                <MdOutlineDeleteOutline onClick={() => deleteducation(i)} className='fs-2 text-danger ms-2' style={{ cursor: 'pointer' }} />
+
+              </div>
+            </div>
+
+          )}
+        </div>
+      }
+
+
       <div className='text-center'>
-        <button onClick={()=>naviagte('/makeResume/experience')} className={`${style.button} btn py-3 ms-4 mt-5 px-3 shadow-lg`}>
+        <button onClick={() => naviagte('/makeResume/experience')} className={`${style.button} btn py-3 ms-4 mt-5 px-3 shadow-lg`}>
           Next to: Experience
         </button>
       </div>

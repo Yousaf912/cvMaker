@@ -14,10 +14,26 @@
     outline: none;
     color: white;
 }
+.button2{
+    background: linear-gradient(130deg, #248829 , #3ec950);
+    border: none;
+    outline: none;
+    color: white;
+}
 .added button{
     background: linear-gradient(130deg, #36bb36 , #4ed159);
     border: none;
     outline: none;
     color: white;
     cursor: not-allowed;
+}
+.educationlist {
+    transition: transform 1s ease; 
+    border: 3px solid rgb(46, 142, 231);
+}
+
+.educationlist:hover {
+    cursor: pointer;          
+    transform: scale(1.1);     
+    border-color: #0694b8;
 }

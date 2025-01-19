@@ -4,6 +4,9 @@ import img from '../../pics/download.jpeg'
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify"
+import { useDispatch, useSelector } from 'react-redux';
+
+
 
 
 export default function PersonInfo() {
@@ -14,12 +17,6 @@ export default function PersonInfo() {
   const id = localStorage.getItem('userid')
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
-
-  useEffect(() => {
-    if (!id) {
-      navigate('/home')
-    }
-  }, [])
 
   const [allfieldData, setAllFieldData] = useState({
     name: '',
@@ -33,8 +30,49 @@ export default function PersonInfo() {
     linkedin: '',
     website: '',
     description: '',
-    secdescription:''
+    secdescription: ''
   });
+
+
+  useEffect(() => {
+    const getalldata = async () => {
+      try {
+        await fetch(`${url}/userdata/${id}`)
+          .then(async (res) => {
+            const fnal = await res.json();
+            const dt = fnal.userdata.personalinfo[0];
+            if (fnal.userdata.personalinfo.length != 0) {
+              setAllFieldData({
+                name: dt.name,
+                surname: dt.surname,
+                address: dt.address,
+                postalcode: dt.postalcode,
+                country: dt.country,
+                number: dt.number,
+                email: dt.email,
+                facebook: dt.facebook,
+                linkedin: dt.linkedin,
+                website: dt.website,
+                description: dt.description,
+                secdescription: dt.secdescription
+              })
+            }
+
+
+          })
+
+      } catch (er) {
+        console.log(er);
+      }
+      
+    }
+    getalldata()
+
+  }, []);
+
+
+
+
 
   const getData = (e) => {
     const name = e.target.name;
@@ -73,6 +111,7 @@ export default function PersonInfo() {
 
 
 
+
   return (
     <div className={`${style.personinfo} mt-5 px-3 mb-5`}>
       <ToastContainer />
@@ -94,12 +133,12 @@ export default function PersonInfo() {
           <div className='d-flex justify-content-between'>
             <div className='col-5'>
               <h6>FirstName</h6>
-              <input onChange={getData} name='name' type="text" placeholder='Yousaf ...' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.name} onChange={getData} name='name' type="text" placeholder='Yousaf ...' className='py-2' style={{ width: '100%' }} />
               {erros.name && <p className='text-danger'>*{erros.name.message}</p>}
             </div>
             <div className='col-5'>
               <h6>SurName</h6>
-              <input onChange={getData} name='surname' type="text" placeholder='shafique ...' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.surname} onChange={getData} name='surname' type="text" placeholder='shafique ...' className='py-2' style={{ width: '100%' }} />
               {erros.surname && <p className='text-danger'>*{erros.surname.message}</p>}
             </div>
           </div>
@@ -107,18 +146,18 @@ export default function PersonInfo() {
           <div className='d-flex justify-content-between mt-4'>
             <div className='col-5'>
               <h6>Address</h6>
-              <input onChange={getData} name='address' type="text" placeholder='30N Gould street Usa' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.address} onChange={getData} name='address' type="text" placeholder='30N Gould street Usa' className='py-2' style={{ width: '100%' }} />
               {erros.address && <p className='text-danger'>*{erros.address.message}</p>}
             </div>
             <div className='col-5 d-flex justify-content-between'>
               <div className='col-5'>
                 <h6>Postal Code</h6>
-                <input onChange={getData} name='postalcode' type="number" placeholder='5930..' className='py-2' style={{ width: '100%' }} />
+                <input value={allfieldData.postalcode} onChange={getData} name='postalcode' type="number" placeholder='5930..' className='py-2' style={{ width: '100%' }} />
                 {erros.postalcode && <p className='text-danger'>*{erros.postalcode.message}</p>}
               </div>
               <div className='col-5'>
                 <h6>Country</h6>
-                <input onChange={getData} name='country' type="text" placeholder='USA' className='py-2' style={{ width: '100%' }} />
+                <input value={allfieldData.country} onChange={getData} name='country' type="text" placeholder='USA' className='py-2' style={{ width: '100%' }} />
                 {erros.country && <p className='text-danger'>*{erros.country.message}</p>}
               </div>
             </div>
@@ -127,23 +166,23 @@ export default function PersonInfo() {
           <div className='d-flex justify-content-between mt-4 flex-wrap'>
             <div className='col-5'>
               <h6>Number</h6>
-              <input onChange={getData} name='number' type="number" placeholder='+9237364543' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.number} onChange={getData} name='number' type="number" placeholder='+9237364543' className='py-2' style={{ width: '100%' }} />
               {erros.number && <p className='text-danger'>*{erros.number.message}</p>}
             </div>
             <div className='col-5'>
               <h6>Email</h6>
-              <input onChange={getData} name='email' type="email" placeholder='yousafva9@gmail.com' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.email} onChange={getData} name='email' type="email" placeholder='yousafva9@gmail.com' className='py-2' style={{ width: '100%' }} />
               {erros.email && <p className='text-danger'>*{erros.email.message}</p>}
             </div>
 
             <div className='col-12 mt-2'>
               <h6>Tell about yourself in 210 words</h6>
-              <textarea onChange={getData} name="description" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
+              <textarea value={allfieldData.description} onChange={getData} name="description" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
               {erros.description && <p className='text-danger'>*{erros.description.message}</p>}
             </div>
             <div className='col-12 mt-2'>
               <h6>Tell about your work,experience,skills</h6>
-              <textarea onChange={getData} name="secdescription" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
+              <textarea value={allfieldData.secdescription} onChange={getData} name="secdescription" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
               {erros.secdescription && <p className='text-danger'>*{erros.secdescription.message}</p>}
             </div>
 
@@ -154,7 +193,7 @@ export default function PersonInfo() {
                   <MdOutlineDeleteOutline style={{ cursor: 'pointer' }} onClick={() => setfacebook(false)} className='text-danger fs-3 ' />
                 </div>
               </div>
-              <input onChange={getData} name='facebook' type="text" placeholder='https://facebook' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.facebook} onChange={getData} name='facebook' type="text" placeholder='https://facebook' className='py-2' style={{ width: '100%' }} />
             </div>}
 
             {linkedin && <div className='col-5 mt-2'>
@@ -162,7 +201,7 @@ export default function PersonInfo() {
                 <h6>LinkedIn</h6>
                 <MdOutlineDeleteOutline style={{ cursor: 'pointer' }} onClick={() => setLinkedin(false)} className='text-danger fs-3 ' />
               </div>
-              <input onChange={getData} name='linkedin' type="text" placeholder='https://yousaf' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.linkedin} onChange={getData} name='linkedin' type="text" placeholder='https://yousaf' className='py-2' style={{ width: '100%' }} />
             </div>}
 
             {website && <div className='col-5 mt-2'>
@@ -170,7 +209,7 @@ export default function PersonInfo() {
                 <h6>Website</h6>
                 <MdOutlineDeleteOutline style={{ cursor: 'pointer' }} onClick={() => setWebsite(false)} className='text-danger fs-3 ' />
               </div>
-              <input onChange={getData} name='website' type="text" placeholder='www.yousafva.com' className='py-2' style={{ width: '100%' }} />
+              <input value={allfieldData.website} onChange={getData} name='website' type="text" placeholder='www.yousafva.com' className='py-2' style={{ width: '100%' }} />
             </div>}
 
           </div>
