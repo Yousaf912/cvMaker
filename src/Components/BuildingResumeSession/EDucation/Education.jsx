@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useDispatch } from 'react-redux';
+import { setSpinner } from '../../ReduxStore/Spinner';
 
 
 
@@ -18,7 +20,8 @@ export default function Education() {
   const [eror, seteror] = useState({});
   const [userEducation, setUserEducation] = useState([]);
   const [arr, setarr] = useState();
-  const [indicator,setindicator]=useState(false)
+  const [indicator, setindicator] = useState(false);
+  const dispatch = useDispatch();
 
 
   const [education, setEducation] = useState({
@@ -72,46 +75,54 @@ export default function Education() {
 
 
   const ad = async () => {
-    try {
-      await fetch(`${url}/addeducation/${id}`, {
-        method: 'PUT',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(education)
-      })
-        .then(async (res) => {
-          const fnal = await res.json();
-          if (fnal.message == 'only 4 education can be added') {
-            toast.error(fnal.message)
-          } else {
-            if (fnal.message == 'validation eror') {
-              seteror(fnal.eror.errors)
+    dispatch(setSpinner(true));
+
+    setTimeout(async () => {
+      try {
+        await fetch(`${url}/addeducation/${id}`, {
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(education)
+        })
+          .then(async (res) => {
+            const fnal = await res.json();
+            if (fnal.message == 'only 4 education can be added') {
+              dispatch(setSpinner(false))
+              toast.error(fnal.message)
             } else {
-              if (fnal.message == 'this degree is already added') {
-                toast.error(fnal.message)
+              if (fnal.message == 'validation eror') {
+                dispatch(setSpinner(false))
+                seteror(fnal.eror.errors)
               } else {
+                if (fnal.message == 'this degree is already added') {
+                  dispatch(setSpinner(false))
+                  toast.error(fnal.message)
+                } else {
 
-                if (fnal.message == 'added') {
-                  setindicator(!indicator)
-                  toast.success(`${education.name} education is added`);
-
-                  seteror({})
-                  setEducation({
-                    name: '',
-                    instituteName: '',
-                    startdate: '',
-                    enddate: ''
-                  })
+                  if (fnal.message == 'added') {
+                    setindicator(!indicator)
+                    toast.success(`${education.name} education is added`);
+                    dispatch(setSpinner(false));
+                    seteror({})
+                    setEducation({
+                      name: '',
+                      instituteName: '',
+                      startdate: '',
+                      enddate: ''
+                    })
+                  }
                 }
               }
             }
-          }
 
-        })
-    } catch (er) {
-      console.log(er);
-    }
+          })
+      } catch (er) {
+        console.log(er);
+      }
+    }, 1000);
+
 
   }
 
@@ -129,61 +140,70 @@ export default function Education() {
   };
 
   const editext = async () => {
+    dispatch(setSpinner(true))
+    setTimeout(async () => {
+      try {
+        await fetch(`${url}/editeducation/${id}/${arr}`,
+          {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(education)
+          }
+        ).then(async (res) => {
+          const fnal = await res.json();
+          if (fnal.message == 'validation eror') {
+            dispatch(setSpinner(false))
+            seteror(fnal.eror.errors)
+          } else {
+            if (fnal.message == 'edited') {
+              toast.success("Education is updated");
+              setindicator(!indicator)
+              seteror('');
+              setedit(false)
+              dispatch(setSpinner(false))
+              setEducation(
+                {
+                  name: '',
+                  instituteName: '',
+                  startdate: '',
+                  enddate: ''
+                }
+              )
 
-
-    try {
-      await fetch(`${url}/editeducation/${id}/${arr}`,
-        {
-          method: 'PUT',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(education)
-        }
-      ).then(async (res) => {
-        const fnal = await res.json();
-        if (fnal.message == 'validation eror') {
-          seteror(fnal.eror.errors)
-        } else {
-          if (fnal.message == 'edited') {
-            toast.success("Education is updated");
-            setindicator(!indicator)
-            seteror('');
-            setedit(false)
-            setEducation(
-              {
-                name: '',
-                instituteName: '',
-                startdate: '',
-                enddate: ''
-              }
-            )
+            }
 
           }
 
-        }
+        })
 
-      })
+      } catch (er) { console.log(er); }
+    }, 1000);
 
-    } catch (er) { console.log(er); }
   }
 
 
   const deleteducation = async (num) => {
-    try {
-     await  fetch(`${url}/deleteducation/${id}/${num}`, {
-        method: 'DELETE',
-        
-      }).then(async(res)=>{
-        const fnal = await res.json();
-        if(fnal.message == 'education is deleted'){
-          toast.success(fnal.message);
-          setindicator(!indicator)
-        }
-      })
-    } catch (er) {
-      console.log(er);
-    }
+    dispatch(setSpinner(true));
+    setTimeout(async() => {
+      
+      try {
+        await fetch(`${url}/deleteducation/${id}/${num}`, {
+          method: 'DELETE',
+  
+        }).then(async (res) => {
+          const fnal = await res.json();
+          if (fnal.message == 'education is deleted') {
+            dispatch(setSpinner(false));
+            toast.success(fnal.message);
+            setindicator(!indicator)
+          }
+        })
+      } catch (er) {
+        console.log(er);
+      }
+    }, 1000);
 
   }
 

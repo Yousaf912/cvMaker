@@ -3,6 +3,8 @@ import zoomslice from './Zoomslice';
 import tokenSlice from './Tokenslice';
 import LogedInUserInfo from './LOgedInUserInfo';
 import { UserData } from './Userdata';
+import { spinner } from './Spinner';
+
 
 
 
@@ -12,6 +14,7 @@ const store = configureStore({
         token: tokenSlice.reducer,
         logedinuser: LogedInUserInfo.reducer,
         userData: UserData.reducer,
+        spiner:spinner.reducer
        
     },
 });

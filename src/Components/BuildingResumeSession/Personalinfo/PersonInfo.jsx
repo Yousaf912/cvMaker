@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify"
 import { useDispatch, useSelector } from 'react-redux';
+import { setSpinner } from '../../ReduxStore/Spinner';
 
 
 
@@ -17,6 +18,8 @@ export default function PersonInfo() {
   const id = localStorage.getItem('userid')
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
+
+  const dispatch = useDispatch();
 
   const [allfieldData, setAllFieldData] = useState({
     name: '',
@@ -64,7 +67,7 @@ export default function PersonInfo() {
       } catch (er) {
         console.log(er);
       }
-      
+
     }
     getalldata()
 
@@ -86,26 +89,33 @@ export default function PersonInfo() {
 
 
   const sendAllData = async () => {
+    dispatch(setSpinner(true));
 
-    try {
-      const updated = await fetch(`${url}/addpersonalinfo/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(allfieldData)
-      })
-      const data = await updated.json();
-      console.log(data);
-      if (data.message == 'Validation failed') {
-        seterros(data.errors)
-      }
-      if (data.message == 'Added') {
-        navigate('/makeResume/education')
-      }
+    setTimeout(async () => {
+      try {
+        const updated = await fetch(`${url}/addpersonalinfo/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(allfieldData)
+        })
+        const data = await updated.json();
+        console.log(data);
+        if (data.message == 'Validation failed') {
+          dispatch(setSpinner(false));
+          seterros(data.errors)
+        }
+        if (data.message == 'Added') {
+          dispatch(setSpinner(false));
+          navigate('/makeResume/education')
+        }
 
 
-    } catch (er) { throw er }
+      } catch (er) { throw er }
+    }, 1000);
+
+
   }
 
 
@@ -113,6 +123,7 @@ export default function PersonInfo() {
 
 
   return (
+    
     <div className={`${style.personinfo} mt-5 px-3 mb-5`}>
       <ToastContainer />
       <h1> What’s the best way for employers to contact you?</h1>

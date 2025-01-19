@@ -5,22 +5,39 @@ import img from '../../pics/img2.png'
 import { useNavigate } from 'react-router-dom';
 import { setLogedInUser } from '../../ReduxStore/LOgedInUserInfo';
 import { useDispatch, useSelector } from 'react-redux';
+import { Spinner } from '../../Spinner';
+import { setSpinner } from '../../ReduxStore/Spinner';
 export default function Firstpage() {
     const token = sessionStorage.getItem('token')
     const navigate = useNavigate();
-    const getstart = () => { navigate('/makeResume/selectTemplate') };
-    
-    useEffect(()=>{
+    const spiner = useSelector((state) => state.spiner.spinner);
+    const dispatch = useDispatch();
+
+    const getstart = () => {
+        dispatch(setSpinner(true))
+
+        setTimeout(() => {
+
+            navigate('/makeResume/selectTemplate')
+            dispatch(setSpinner(false))
+        }, 1000);
+    };
+
+    useEffect(() => {
+
         const id = localStorage.getItem('userid');
-        if(!id){
+        if (!id) {
             navigate('/login')
         }
-    },[])
+    }, [])
 
 
-     
+
     return (
         <div>
+            {spiner &&
+                <Spinner />}
+
             <Navbar />
             <div className={`container ${style.main}  mt-5 pb-3 `}>
                 <div className="row">

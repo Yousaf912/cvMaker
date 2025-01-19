@@ -6,6 +6,8 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { FaRegEdit } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import { setSpinner } from '../../ReduxStore/Spinner';
 
 
 
@@ -18,7 +20,8 @@ export default function Experience() {
     const [indicator, setindicator] = useState(false);
     const [userExperience, setuserexperience] = useState([]);
     const [edit, setedit] = useState(false);
-    const [arr,setarr]=useState()
+    const [arr,setarr]=useState();
+    const disptach = useDispatch()
 
 
     useEffect(() => {
@@ -67,47 +70,56 @@ export default function Experience() {
     }
 
     const add = async () => {
+        disptach(setSpinner(true));
 
-        try {
-            const res = await fetch(`${url}/addexperince/${id}`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-
-            const fnal = await res.json();
-            console.log(fnal);
-
-            if (fnal.message === 'validation eror') {
-                seteror(fnal.eror.errors);
-            } else {
-                switch (fnal.message) {
-                    case 'data can not be exceed more than 5':
-                        toast.error(fnal.message);
-                        break;
-                    case 'added':
-                        toast.success('Experience is added');
-
-                        seteror({});
-                        setdata({
-                            title: '',
-                            office: '',
-                            address: '',
-                            startingDate: '',
-                            endDate: ''
-                        });
-                        break;
-                    default:
-                        console.error('Unexpected message:', fnal.message);
-                        break;
+        setTimeout(async() => {
+            
+            try {
+                const res = await fetch(`${url}/addexperince/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+    
+                const fnal = await res.json();
+                console.log(fnal);
+    
+                if (fnal.message === 'validation eror') {
+                    disptach(setSpinner(false));
+                    seteror(fnal.eror.errors);
+                } else {
+                    switch (fnal.message) {
+                        case 'data can not be exceed more than 5':
+                            disptach(setSpinner(false));
+                            toast.error(fnal.message);
+                            break;
+                        case 'added':
+                            disptach(setSpinner(false));
+                            toast.success('Experience is added');
+                          
+                            seteror({});
+                            setindicator(!indicator)
+                            setdata({
+                                title: '',
+                                office: '',
+                                address: '',
+                                startingDate: '',
+                                endDate: ''
+                            });
+                            break;
+                        default:
+                            console.error('Unexpected message:', fnal.message);
+                            break;
+                    }
                 }
+    
+            } catch (er) {
+                console.error('Error during the fetch:', er);
             }
+        }, 1000);
 
-        } catch (er) {
-            console.error('Error during the fetch:', er);
-        }
     }
 
 
@@ -129,63 +141,75 @@ export default function Experience() {
 
 
     const deletexperience = async (num) => {
-        try {
-            await fetch(`${url}/deletexperience/${id}/${num}`, {
-                method: 'DELETE',
+        disptach(setSpinner(true));
 
-            }).then(async (res) => {
-                const fnal = await res.json();
-                if (fnal.message == 'experience is deleted') {
-                    toast.success(fnal.message);
-                    setindicator(!indicator)
-                }
-            })
-        } catch (er) {
-            console.log(er);
-        }
+        setTimeout(async() => {
+            
+            try {
+                await fetch(`${url}/deletexperience/${id}/${num}`, {
+                    method: 'DELETE',
+    
+                }).then(async (res) => {
+                    const fnal = await res.json();
+                    if (fnal.message == 'experience is deleted') {
+                        disptach(setSpinner(false));
+                        toast.success(fnal.message);
+                        setindicator(!indicator)
+                    }
+                })
+            } catch (er) {
+                console.log(er);
+            }
+        }, 1000);
 
     }
 
 
     const editext = async () => {
+        disptach(setSpinner(true));
 
-
-        try {
-            await fetch(`${url}/editexperience/${id}/${arr}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(data)
-                }
-            ).then(async (res) => {
-                const fnal = await res.json();
-                if (fnal.message == 'validation eror') {
-                    seteror(fnal.eror.errors)
-                } else {
-                    if (fnal.message == 'edited') {
-                        toast.success("Experience is updated");
-                        setindicator(!indicator)
-                        seteror('');
-                        setedit(false)
-                        setdata(
-                            {
-                                title: '',
-                                office: '',
-                                address: '',
-                                startingDate: '',
-                                endDate: ''
-                            }
-                        )
-
+        setTimeout(async() => {
+            try {
+                await fetch(`${url}/editexperience/${id}/${arr}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
                     }
+                ).then(async (res) => {
+                    const fnal = await res.json();
+                    if (fnal.message == 'validation eror') {
+                          disptach(setSpinner(false));
+                        seteror(fnal.eror.errors)
+                    } else {
+                        if (fnal.message == 'edited') {
+                            disptach(setSpinner(false));
+                            toast.success("Experience is updated");
+                            setindicator(!indicator)
+                            seteror('');
+                            setedit(false)
+                            setdata(
+                                {
+                                    title: '',
+                                    office: '',
+                                    address: '',
+                                    startingDate: '',
+                                    endDate: ''
+                                }
+                            )
+    
+                        }
+    
+                    }
+    
+                })
+    
+            } catch (er) { console.log(er); }
+        }, 1000);
 
-                }
-
-            })
-
-        } catch (er) { console.log(er); }
+       
     }
 
     return (
@@ -193,7 +217,7 @@ export default function Experience() {
             <ToastContainer />
             <h1>Tell us about your most recent job</h1>
             <h4>We’ll start there and work backward. Tell us your experirnce where do you work </h4>
-            <div className=''>
+            <div className=' '>
 
                 <div className='  d-flex justify-content-between flex-wrap mt-4'>
                     <div className='col-5'>
@@ -262,7 +286,7 @@ export default function Experience() {
                 }
             </div>
             <div className={`mt-5 ${style.main} text-center  `}>
-                <button onClick={() => navigate('/makeResume/skills')} className='btn py-3  px-3 shadow-lg'>
+                <button onClick={() => navigate('/makeResume/skills')} className={`${style.button} btn py-3  px-3 shadow-lg`}>
                     Next to: Experience
                 </button>
             </div>

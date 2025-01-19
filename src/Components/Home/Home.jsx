@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setToken } from '../ReduxStore/Tokenslice';
 import { toast, ToastContainer } from 'react-toastify';
+import { setSpinner } from '../ReduxStore/Spinner';
 const url = import.meta.env.VITE_FETCHING_URL;
 
 export default function Home() {
@@ -12,7 +13,7 @@ export default function Home() {
   const id = localStorage.getItem('userid');
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
-  
+
 
   const getuserinfo = async () => {
     try {
@@ -38,12 +39,18 @@ export default function Home() {
 
 
   const openlink = async () => {
-   
-    if (id) {
-      navigate('/makeResume')
-    } else {
-      navigate('/login')
-    }
+    dispatch(setSpinner(true))
+    setTimeout(() => {
+
+      if (id) {
+        navigate('/makeResume')
+        dispatch(setSpinner(false))
+      } else {
+        navigate('/login')
+        dispatch(setSpinner(false))
+      }
+    }, 1000)
+
   }
 
   return (

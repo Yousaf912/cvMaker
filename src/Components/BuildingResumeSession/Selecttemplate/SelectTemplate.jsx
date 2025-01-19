@@ -13,6 +13,7 @@ export const SelectTemplate = () => {
     const navigate = useNavigate()
     const id = localStorage.getItem('userid');
     const url = import.meta.env.VITE_FETCHING_URL;
+    
 
     useEffect(()=>{
         if(!id){

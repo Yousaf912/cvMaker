@@ -43,7 +43,7 @@ export default function TempleteOne() {
             {alldata != undefined && <>
                 <div className="row" style={{ overflow: 'hidden' }}>
                     <div className={` mb-5  mt-3 `} style={{ transform: `scale(${zoomvalue})`, transformOrigin: 'top' }}>
-                        <div id='divtodownload' className={`border border-5 mx-auto ${style.main}  d-flex`}>
+                        <div id='divtodownload' className={` mx-auto ${style.main}  d-flex`}>
                             <div className='col-5'>
                                 <div className={`${style.box} col-2 p-5`}>
                                 </div>
