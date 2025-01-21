@@ -141,7 +141,7 @@ export default function PersonInfo() {
 
   return (
 
-    <div className={`${style.personinfo}  mt-5 px-3 mb-5`}>
+    <div className={`${style.personinfo}  mt-5 px-3 mb-5`} style={{height:'100%'}} >
       <ToastContainer />
       <h1> What’s the best way for employers to contact you?</h1>
       <h4>We suggest including an email and phone number.</h4>
