@@ -30,7 +30,9 @@ export default function TempleteOne() {
 
     const pdfdownload = (name) => {
 
-        PdfDownload('divtodownload', name)
+      const message =   PdfDownload('divtodownload', name);
+      console.log(message);
+      
     }
 
 

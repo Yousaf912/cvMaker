@@ -7,10 +7,6 @@ import { toast, ToastContainer } from "react-toastify"
 import { useDispatch, useSelector } from 'react-redux';
 import { setSpinner } from '../../ReduxStore/Spinner';
 import { uploadImage } from '../../../firebasefunction';
-import { Spinner } from '../../Spinner';
-
-
-
 
 
 export default function PersonInfo() {
@@ -22,7 +18,6 @@ export default function PersonInfo() {
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
   const [imege, setimg] = useState()
-   const spiner = useSelector((state) => state.spiner.spinner);
   const dispatch = useDispatch();
 
   const [allfieldData, setAllFieldData] = useState({
@@ -80,9 +75,6 @@ export default function PersonInfo() {
   }, []);
 
 
-
-
-
   const getData = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -92,12 +84,10 @@ export default function PersonInfo() {
     })
   }
 
-
-
   const sendAllData = async () => {
     dispatch(setSpinner(true));
     const newdata = await { ...allfieldData, img: imege }
-  
+
     setTimeout(async () => {
       try {
         const updated = await fetch(`${url}/addpersonalinfo/${id}`, {
@@ -117,12 +107,8 @@ export default function PersonInfo() {
           dispatch(setSpinner(false));
           navigate('/makeResume/education')
         }
-
-
       } catch (er) { throw er }
     }, 1000);
-
-
   }
   const getimg = async (e) => {
     const file = e.target.files[0];
@@ -133,9 +119,7 @@ export default function PersonInfo() {
         console.log(imgurl);
         dispatch(setSpinner(false));
       }
-
       setimg(imgurl);
-
     }
   }
 
@@ -143,8 +127,7 @@ export default function PersonInfo() {
 
   return (
 
-    <div className={`${style.personinfo} position-relative   mt-5 px-3 mb-5`}  style={{height:'100%'}} >
-       {spiner && <Spinner />}
+    <div className={`${style.personinfo}   mt-5 px-3 mb-5`}  >
       <ToastContainer />
       <h1> What’s the best way for employers to contact you?</h1>
       <h4>We suggest including an email and phone number.</h4>
@@ -156,13 +139,12 @@ export default function PersonInfo() {
               <img src={img1} style={{ width: '100%' }} />
             }
           </div>
-            {erros.img && <p className='text-danger'>*{erros.img.message  }</p>}
+          {erros.img && <p className='text-danger'>*{erros.img.message}</p>}
           <div className='border ' style={{ overflow: 'hidden' }}>
             <input type="file" onChange={getimg} />
 
           </div>
         </div>
-
         <div className='col-md-8'>
           <div className='d-md-flex justify-content-between'>
             <div className='col-md-5'>
@@ -176,7 +158,6 @@ export default function PersonInfo() {
               {erros.surname && <p className='text-danger'>*{erros.surname.message}</p>}
             </div>
           </div>
-
           <div className='d-md-flex justify-content-between mt-4'>
             <div className='col-md-5'>
               <h6>Address</h6>
@@ -196,7 +177,6 @@ export default function PersonInfo() {
               </div>
             </div>
           </div>
-
           <div className='d-flex justify-content-between mt-4 flex-wrap'>
             <div className='col-5'>
               <h6>Number</h6>
@@ -208,7 +188,6 @@ export default function PersonInfo() {
               <input value={allfieldData.email} onChange={getData} name='email' type="email" placeholder='yousafva9@gmail.com' className='py-2' style={{ width: '100%' }} />
               {erros.email && <p className='text-danger'>*{erros.email.message}</p>}
             </div>
-
             <div className='col-12 mt-2'>
               <h6>Tell about yourself in 210 words</h6>
               <textarea value={allfieldData.description} onChange={getData} name="description" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
@@ -219,7 +198,6 @@ export default function PersonInfo() {
               <textarea value={allfieldData.secdescription} onChange={getData} name="secdescription" rows={5} className='rounded-3 p-1' style={{ width: '100%' }}></textarea>
               {erros.secdescription && <p className='text-danger'>*{erros.secdescription.message}</p>}
             </div>
-
             {facebook && <div className='col-md-5 mt-2'>
               <div>
                 <div className='d-flex justify-content-between'>
@@ -229,7 +207,6 @@ export default function PersonInfo() {
               </div>
               <input value={allfieldData.facebook} onChange={getData} name='facebook' type="text" placeholder='https://facebook' className='py-2' style={{ width: '100%' }} />
             </div>}
-
             {linkedin && <div className='col-md-5 mt-2'>
               <div className='d-flex justify-content-between'>
                 <h6>LinkedIn</h6>
@@ -237,7 +214,6 @@ export default function PersonInfo() {
               </div>
               <input value={allfieldData.linkedin} onChange={getData} name='linkedin' type="text" placeholder='https://yousaf' className='py-2' style={{ width: '100%' }} />
             </div>}
-
             {website && <div className='col-md-5 mt-2'>
               <div className='d-flex justify-content-between'>
                 <h6>Website</h6>
@@ -245,34 +221,21 @@ export default function PersonInfo() {
               </div>
               <input value={allfieldData.website} onChange={getData} name='website' type="text" placeholder='www.yousafva.com' className='py-2' style={{ width: '100%' }} />
             </div>}
-
           </div>
-
-
           <div className='mt-3'>
             <p className='text-primary'>Optionals</p>
             <div className='mt-2 d-flex flex-wrap justify-content-between'>
               {!facebook && <div onClick={() => setfacebook(true)} className='border col-5 col-md-3 py-2 bg-primary text-white rounded-5  btn '>+ facebook</div>}
               {!linkedin && <div onClick={() => { setLinkedin(true) }} className='border col-5 col-md-3 py-2 bg-primary text-white rounded-5  btn '>+ linkdin</div>}
               {!website && <div onClick={() => setWebsite(true)} className='border col-5 col-md-3 py-2 bg-primary text-white rounded-5  btn '>+ website</div>}
-
             </div>
           </div>
-
           <div className={`mt-5 ${style.main} text-center `}>
             <button onClick={sendAllData} className='btn  px-3 shadow-lg'>
               Next: Education
             </button>
           </div>
-
-
-
         </div>
-
-
-
-
-
       </div>
     </div>
   )
