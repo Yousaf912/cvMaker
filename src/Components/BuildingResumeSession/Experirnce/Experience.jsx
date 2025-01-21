@@ -213,7 +213,7 @@ export default function Experience() {
     }
 
     return (
-        <div className={` ${style.education} mt-4 p-3  `} style={{height:'100%'}}>
+        <div className={` ${style.education} mt-4 p-3  `} >
             <ToastContainer />
             <h1>Tell us about your most recent job</h1>
             <h4>We’ll start there and work backward. Tell us your experirnce where do you work </h4>

@@ -43,7 +43,7 @@ export default function MainPart() {
   console.log(isMdScreen);
   
   return (
-    < div className='position-relative' style={{height:'100%'}}>
+    < div className='position-relative' style={{height:'100vh'}}>
       {spiner && <Spinner />}
       <div className='d-md-flex'>
        {isMdScreen &&
