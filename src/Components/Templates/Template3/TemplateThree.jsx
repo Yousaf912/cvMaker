@@ -40,7 +40,7 @@ export default function TempleteThree() {
                         <div id='divtodownload' className={`border mx-auto ${style.main}  d-flex `}>
                             <div className="col-5 ps-4" style={{ backgroundColor: '#dbc08c' }}  >
                                 <div className={` ${style.imgdiv} col-3 `}>
-                                    <img src={img} className='border  border-5 rounded-circle border-white' style={{ width: "100%" }} />
+                                    <img src={alldata.personalinfo[0].img} className='border  border-5 rounded-circle border-white' style={{ width: "100%" }} />
                                 </div>
                                 <div className={`${style.emptydiv}`}>
                                 </div>

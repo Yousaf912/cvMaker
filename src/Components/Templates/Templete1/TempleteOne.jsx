@@ -35,10 +35,6 @@ export default function TempleteOne({download}) {
     }
 
 
-    
- 
-
-
     return (
         <div className='container' >
             {alldata != undefined && <>

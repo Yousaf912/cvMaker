@@ -1,4 +1,4 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { storage } from './firebase-config'; 
 
 
@@ -22,4 +22,24 @@ export const uploadImage = async (imageFile,id) => {
   }
 
   
+};
+
+
+export const deleteImage = async (id) => {
+  console.log(id);
+  
+  if (!id) {
+    console.error('No image ID provided.');
+    return;
+  }
+
+  const imageRef = ref(storage, `images/${id}.png`);
+
+  try {
+    await deleteObject(imageRef);
+    console.log('Image deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    throw new Error('Image deletion failed');
+  }
 };
