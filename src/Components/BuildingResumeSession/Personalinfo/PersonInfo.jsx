@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify"
 import { useDispatch, useSelector } from 'react-redux';
 import { setSpinner } from '../../ReduxStore/Spinner';
 import { uploadImage } from '../../../firebasefunction';
+import { Spinner } from '../../Spinner';
 
 
 
@@ -21,6 +22,7 @@ export default function PersonInfo() {
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
   const [imege, setimg] = useState()
+   const spiner = useSelector((state) => state.spiner.spinner);
   const dispatch = useDispatch();
 
   const [allfieldData, setAllFieldData] = useState({
@@ -141,7 +143,8 @@ export default function PersonInfo() {
 
   return (
 
-    <div className={`${style.personinfo}   mt-5 px-3 mb-5`}  style={{height:'100%'}} >
+    <div className={`${style.personinfo} position-relative   mt-5 px-3 mb-5`}  style={{height:'100%'}} >
+       {spiner && <Spinner />}
       <ToastContainer />
       <h1> What’s the best way for employers to contact you?</h1>
       <h4>We suggest including an email and phone number.</h4>
