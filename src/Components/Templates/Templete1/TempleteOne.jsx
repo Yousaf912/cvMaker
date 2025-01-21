@@ -2,18 +2,17 @@ import { useSelector } from 'react-redux'
 import ZoomInOut from '../../ZoomInOut/ZomInOut'
 import style from './templateone.module.css'
 import React, { useEffect, useState } from 'react'
-import img from '../../pics/me.png'
 import { FaPhoneVolume } from "react-icons/fa6";
 import { IoMdMailOpen } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { TbWorldWww } from "react-icons/tb";
 import { FaLinkedin, FaFacebookSquare } from "react-icons/fa";
-import { PdfDownload } from '../DownloadFunction'
 
 
 
 
-export default function TempleteOne() {
+
+export default function TempleteOne({download}) {
     const [alldata, setAllData] = useState()
     const zoomvalue = useSelector((state) => {
         return state.zoom.zoomlevel
@@ -30,7 +29,7 @@ export default function TempleteOne() {
 
     const pdfdownload =async (name) => {
 
-      const message =  await PdfDownload('divtodownload', name);
+      const message =  await download('divtodownload', name);
       console.log(message);
       
     }
