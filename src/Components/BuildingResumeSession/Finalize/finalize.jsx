@@ -55,8 +55,11 @@ export default function Finalize() {
           };
   
           html2pdf().from(element).set(options).save().then(() => {
+            setTimeout(() => {
+              
               deleteImage(id)
               UpdateAllData();
+            }, 1000);
           }).catch((error) => {
               console.error("Download error:", error);
               reject("Error downloading file.");
