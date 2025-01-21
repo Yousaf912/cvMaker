@@ -12,8 +12,10 @@ export const PdfDownload = (id, filename) => {
         html2canvas: { scale: 4 },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    html2pdf().from(element).set(options).save().then(()=>{
-        return ("downloaded")
+    html2pdf().from(element).set(options).save().then(() => {
+        if (typeof onDownloadComplete === 'function') {
+            onDownloadComplete("Download complete! File has been saved.");
+        }
     })
 }
 
