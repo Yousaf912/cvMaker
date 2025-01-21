@@ -50,7 +50,7 @@ export default function MainPart() {
         <Sidebar />
        }
       
-        <div style={{ marginLeft: "20%" }}>
+        <div  style={{ marginLeft: isMdScreen && "20%", height:'100%' }}>
 
           {element}
         </div>
