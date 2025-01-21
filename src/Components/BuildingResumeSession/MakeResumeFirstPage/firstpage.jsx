@@ -42,7 +42,7 @@ export default function Firstpage() {
             <div className={`container ${style.main}  mt-5 pb-3 `}>
                 <div className="row">
                     <div className='mt-5 d-flex justify-content-between align-items-center'>
-                        <div className="col-5">
+                        <div data-aos="zoom-in-up" data-aos-duration="2000" className="col-5">
                             <h1 className='text-center'>Just three simple steps</h1>
                             <div className='d-flex  mt-5  '>
                                 <div className={`${style.dot} col-1 me-4  rounded-circle fs-4  text-white`}>1</div>
@@ -60,7 +60,7 @@ export default function Firstpage() {
 
                             </div>
                         </div>
-                        <div className="col-5">
+                        <div data-aos="zoom-out-right" data-aos-duration="2000" className="col-5">
                             <img src={img} />
                             <div className='mt-3 text-center'>
                                 <button onClick={getstart} className='btn  px-3 shadow-lg'>

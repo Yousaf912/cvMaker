@@ -46,7 +46,7 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <div data-aos="zoom-in-up" data-aos-duration="2000" >
            <ToastContainer/>
             <h1 className='text-center text-white'>Login</h1>
             <div className='text-white mt-5'>

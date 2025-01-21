@@ -64,10 +64,10 @@ export default function Signup() {
 
 
     return (
-        <div>
+        <div data-aos="zoom-in-up" data-aos-duration="2000" >
             <ToastContainer />
             <h1 className='text-center text-white'>Signup</h1>
-            <div className='text-white'>
+            <div  className='text-white'>
                 <form onSubmit={signup}>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>

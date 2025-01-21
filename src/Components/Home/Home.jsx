@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { setToken } from '../ReduxStore/Tokenslice';
 import { toast, ToastContainer } from 'react-toastify';
 import { setSpinner } from '../ReduxStore/Spinner';
+import { useTypewriter } from 'react-simple-typewriter';
 const url = import.meta.env.VITE_FETCHING_URL;
 
 export default function Home() {
@@ -13,6 +14,13 @@ export default function Home() {
   const id = localStorage.getItem('userid');
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
+
+  const [text] = useTypewriter({
+    words: ['Effortlessly!'],
+    loop: true,
+    typeSpeed: 80,
+    deleteSpeed: 40,
+  })
 
 
   const getuserinfo = async () => {
@@ -59,8 +67,8 @@ export default function Home() {
 
       <div className={` container`}>
         <div className={`row justify-content-around mt-5 align-items-center d-md-flex `}>
-          <div className="col-md-5">
-            <h1 className=' mt-5'>Build Your Dream CV Effortlessly!</h1>
+          <div data-aos="zoom-in" data-aos-duration="2000" className="col-md-5">
+            <h1 className=' mt-5'>Build Your Potential CV <br /> {text} <span className=''>|</span> </h1>
             <p className='mt-3'>
               Transform your job search with our powerful CV maker. Create a professional, eye-catching resume that showcases your unique skills and experiences—all in just a few clicks. Stand out from the competition and take the next step toward your dream job today.
             </p>
@@ -70,7 +78,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <div className="col-md-5 ">
+          <div data-aos="fade-right" data-aos-duration="2000" className="col-md-5 ">
             <img src={img} style={{ width: '100%' }} />
           </div>
         </div>

@@ -48,7 +48,7 @@ export default function TempleteOne() {
                                 <div className={`${style.box} col-2 p-5`}>
                                 </div>
                                 <div className={`${style.imgdiv}  col-3 bg-white rounded-circle`}>
-                                    <img src={img} className=' border border-2 border-black rounded-circle' style={{ width: '100%', height: '100%' }} />
+                                    <img src={alldata.personalinfo[0].img} className=' border border-2 border-black rounded-circle' style={{ width: '100%', height: '100%' }} />
                                 </div>
                                 <div className='mt-5 text-center'>
                                     <h3 >About Me </h3>

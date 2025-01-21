@@ -215,24 +215,24 @@ export default function Education() {
       <h4>Enter your education experience so far, even if you are a current student or did not graduate.</h4>
 
 
-      <div className=' d-flex justify-content-between flex-wrap mt-4'>
-        <div className='col-5'>
+      <div className=' d-md-flex justify-content-between flex-wrap mt-4'>
+        <div className='col-md-5'>
           <h6>Degree</h6>
           <input onChange={getalldata} name='name' value={education.name} type="text" placeholder='degree title ......' style={{ width: '100%' }} />
           {eror.name && <p className='text-danger'>*{eror.name.message}</p>}
         </div>
-        <div className='col-5'>
+        <div className='col-md-5'>
           <h6>Institute</h6>
           <input onChange={getalldata} value={education.instituteName} name='instituteName' type="text" placeholder='karachi university....' style={{ width: '100%' }} />
           {eror.instituteName && <p className='text-danger'>*{eror.instituteName.message}</p>}
         </div>
-        <div className='col-5 mt-4 d-flex justify-content-between'>
-          <div className='col-5'>
+        <div className='col-md-5 mt-4 d-flex justify-content-between'>
+          <div className='col-md-5'>
             <h6>Starting Date</h6>
             <input onChange={getalldata} value={education.startdate} name='startdate' type="date" style={{ width: '100%' }} />
             {eror.startdate && <p className='text-danger'>*{eror.startdate.message}</p>}
           </div>
-          <div className='col-5'>
+          <div className='col-md-5'>
             <h6>End Date</h6>
             <input onChange={getalldata} value={education.enddate} name='enddate' type="date" style={{ width: '100%' }} />
             {eror.enddate && <p className='text-danger'>*{eror.enddate.message}</p>}
@@ -253,9 +253,9 @@ export default function Education() {
       </div>
 
       {userEducation.length != 0 &&
-        <div className={`d-flex flex-wrap justify-content-between mt-5 `}>
+        <div className={`d-md-flex flex-wrap justify-content-between mt-5 `}>
           {userEducation.map((val, i) =>
-            <div key={i} className='d-flex flex-column col-5 '>
+            <div key={i} className='d-flex flex-column col-md-5 '>
 
               <div className={`mt-3  border-3 rounded-4  p-2 shadow ${style.educationlist} `}>
 

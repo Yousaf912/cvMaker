@@ -219,23 +219,23 @@ export default function Experience() {
             <h4>We’ll start there and work backward. Tell us your experirnce where do you work </h4>
             <div className=' '>
 
-                <div className='  d-flex justify-content-between flex-wrap mt-4'>
-                    <div className='col-5'>
+                <div className='  d-md-flex justify-content-between flex-wrap mt-4'>
+                    <div className='col-md-5'>
                         <h6>Job Title</h6>
                         <input onChange={getdata} name='title' value={data.title} type="text" placeholder='Mern stack developwmt ...' style={{ width: '100%' }} />
                         {eror.title && <p className='text-danger'>*{eror.title.message}</p>}
                     </div>
-                    <div className='col-5'>
+                    <div className='col-md-5'>
                         <h6>Office name</h6>
                         <input onChange={getdata} name='office' value={data.office} type="text" placeholder='karachi ' style={{ width: '100%' }} />
                         {eror.office && <p className='text-danger'>*{eror.office.message}</p>}
                     </div>
-                    <div className='col-5 mt-4'>
+                    <div className='col-md-5 mt-4'>
                         <h6>Address</h6>
                         <input onChange={getdata} value={data.address} name='address' type="text" placeholder='karachi ' style={{ width: '100%' }} />
                         {eror.address && <p className='text-danger'>*{eror.address.message}</p>}
                     </div>
-                    <div className='col-5 mt-4 d-flex justify-content-between'>
+                    <div className='col-md-5 mt-4 d-flex justify-content-between'>
                         <div className='col-5'>
                             <h6>Starting Date</h6>
                             <input onChange={getdata} name='startingDate' value={data.startingDate} type="date" style={{ width: '100%' }} />
@@ -261,9 +261,9 @@ export default function Experience() {
                     }
                 </div>
                 {userExperience.length != 0 &&
-                    <div className={`d-flex flex-wrap justify-content-between  `}>
+                    <div className={`d-md-flex flex-wrap justify-content-between  `}>
                         {userExperience.map((val, i) =>
-                            <div key={i} className='d-flex flex-column col-5 '>
+                            <div key={i} className='d-flex flex-column col-md-5 '>
 
                                 <div className={`mt-3  border-3 rounded-4  p-2 shadow ${style.educationlist} `}>
 

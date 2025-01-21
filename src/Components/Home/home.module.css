@@ -10,4 +10,9 @@
     border: none;
     outline: none;
     color: white;
+    transition: transform 1s ease;
+}
+
+.main button:hover{
+    transform: scale(1.2);
 }

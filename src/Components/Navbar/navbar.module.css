@@ -57,4 +57,8 @@ a{
     color: white;
     border: none ;
     outline: none;
+    transition: transform 1s ease;
+}
+.navbar button:hover{
+    transform: scale(1.1);
 }

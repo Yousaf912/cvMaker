@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from './personalnfo.module.css'
-import img from '../../pics/download.jpeg'
+import img1 from '../../pics/download.jpeg'
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify"
 import { useDispatch, useSelector } from 'react-redux';
 import { setSpinner } from '../../ReduxStore/Spinner';
+import { uploadImage } from '../../../firebasefunction';
+
 
 
 
@@ -18,7 +20,7 @@ export default function PersonInfo() {
   const id = localStorage.getItem('userid')
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
-
+  const [imege, setimg] = useState()
   const dispatch = useDispatch();
 
   const [allfieldData, setAllFieldData] = useState({
@@ -33,7 +35,8 @@ export default function PersonInfo() {
     linkedin: '',
     website: '',
     description: '',
-    secdescription: ''
+    secdescription: '',
+    img: ''
   });
 
 
@@ -45,6 +48,7 @@ export default function PersonInfo() {
             const fnal = await res.json();
             const dt = fnal.userdata.personalinfo[0];
             if (fnal.userdata.personalinfo.length != 0) {
+              setimg(dt.img)
               setAllFieldData({
                 name: dt.name,
                 surname: dt.surname,
@@ -57,7 +61,7 @@ export default function PersonInfo() {
                 linkedin: dt.linkedin,
                 website: dt.website,
                 description: dt.description,
-                secdescription: dt.secdescription
+                secdescription: dt.secdescription,
               })
             }
 
@@ -90,7 +94,8 @@ export default function PersonInfo() {
 
   const sendAllData = async () => {
     dispatch(setSpinner(true));
-
+    const newdata = await { ...allfieldData, img: imege }
+  
     setTimeout(async () => {
       try {
         const updated = await fetch(`${url}/addpersonalinfo/${id}`, {
@@ -98,7 +103,7 @@ export default function PersonInfo() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(allfieldData)
+          body: JSON.stringify(newdata)
         })
         const data = await updated.json();
         console.log(data);
@@ -117,50 +122,65 @@ export default function PersonInfo() {
 
 
   }
+  const getimg = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      dispatch(setSpinner(true));
+      const imgurl = await uploadImage(file, id);
+      if (imgurl) {
+        console.log(imgurl);
+        dispatch(setSpinner(false));
+      }
 
+      setimg(imgurl);
 
+    }
+  }
 
 
 
   return (
-    
+
     <div className={`${style.personinfo} mt-5 px-3 mb-5`}>
       <ToastContainer />
       <h1> What’s the best way for employers to contact you?</h1>
       <h4>We suggest including an email and phone number.</h4>
-      <div className='d-flex justify-content-between mt-5'>
-        <div className=' col-3'>
+      <div className='d-md-flex justify-content-between mt-5'>
+        <div className=' col-md-3 col-8'>
           <div className=" border border-3">
-            <img src={img} style={{ width: '100%' }} />
-
+            {imege ?
+              <img src={imege} style={{ width: '100%' }} /> :
+              <img src={img1} style={{ width: '100%' }} />
+            }
           </div>
+            {erros.img && <p className='text-danger'>*{erros.img.message  }</p>}
           <div className='border ' style={{ overflow: 'hidden' }}>
-            <input type="file" />
+            <input type="file" onChange={getimg} />
 
           </div>
         </div>
 
-        <div className='col-8'>
-          <div className='d-flex justify-content-between'>
-            <div className='col-5'>
+        <div className='col-md-8'>
+          <div className='d-md-flex justify-content-between'>
+            <div className='col-md-5'>
               <h6>FirstName</h6>
               <input value={allfieldData.name} onChange={getData} name='name' type="text" placeholder='Yousaf ...' className='py-2' style={{ width: '100%' }} />
               {erros.name && <p className='text-danger'>*{erros.name.message}</p>}
             </div>
-            <div className='col-5'>
+            <div className='col-md-5'>
               <h6>SurName</h6>
               <input value={allfieldData.surname} onChange={getData} name='surname' type="text" placeholder='shafique ...' className='py-2' style={{ width: '100%' }} />
               {erros.surname && <p className='text-danger'>*{erros.surname.message}</p>}
             </div>
           </div>
 
-          <div className='d-flex justify-content-between mt-4'>
-            <div className='col-5'>
+          <div className='d-md-flex justify-content-between mt-4'>
+            <div className='col-md-5'>
               <h6>Address</h6>
               <input value={allfieldData.address} onChange={getData} name='address' type="text" placeholder='30N Gould street Usa' className='py-2' style={{ width: '100%' }} />
               {erros.address && <p className='text-danger'>*{erros.address.message}</p>}
             </div>
-            <div className='col-5 d-flex justify-content-between'>
+            <div className='col-md-5 d-flex justify-content-between'>
               <div className='col-5'>
                 <h6>Postal Code</h6>
                 <input value={allfieldData.postalcode} onChange={getData} name='postalcode' type="number" placeholder='5930..' className='py-2' style={{ width: '100%' }} />
@@ -197,7 +217,7 @@ export default function PersonInfo() {
               {erros.secdescription && <p className='text-danger'>*{erros.secdescription.message}</p>}
             </div>
 
-            {facebook && <div className='col-5 mt-2'>
+            {facebook && <div className='col-md-5 mt-2'>
               <div>
                 <div className='d-flex justify-content-between'>
                   <h6>Facebook</h6>
@@ -207,7 +227,7 @@ export default function PersonInfo() {
               <input value={allfieldData.facebook} onChange={getData} name='facebook' type="text" placeholder='https://facebook' className='py-2' style={{ width: '100%' }} />
             </div>}
 
-            {linkedin && <div className='col-5 mt-2'>
+            {linkedin && <div className='col-md-5 mt-2'>
               <div className='d-flex justify-content-between'>
                 <h6>LinkedIn</h6>
                 <MdOutlineDeleteOutline style={{ cursor: 'pointer' }} onClick={() => setLinkedin(false)} className='text-danger fs-3 ' />
@@ -215,7 +235,7 @@ export default function PersonInfo() {
               <input value={allfieldData.linkedin} onChange={getData} name='linkedin' type="text" placeholder='https://yousaf' className='py-2' style={{ width: '100%' }} />
             </div>}
 
-            {website && <div className='col-5 mt-2'>
+            {website && <div className='col-md-5 mt-2'>
               <div className='d-flex justify-content-between'>
                 <h6>Website</h6>
                 <MdOutlineDeleteOutline style={{ cursor: 'pointer' }} onClick={() => setWebsite(false)} className='text-danger fs-3 ' />
@@ -228,10 +248,10 @@ export default function PersonInfo() {
 
           <div className='mt-3'>
             <p className='text-primary'>Optionals</p>
-            <div className='mt-2 d-flex justify-content-between'>
-              {!facebook && <div onClick={() => setfacebook(true)} className='border col-3 py-2 bg-primary text-white rounded-5  btn '>+ facebook</div>}
-              {!linkedin && <div onClick={() => { setLinkedin(true) }} className='border col-3 py-2 bg-primary text-white rounded-5  btn '>+ linkdin</div>}
-              {!website && <div onClick={() => setWebsite(true)} className='border col-3 py-2 bg-primary text-white rounded-5  btn '>+ website</div>}
+            <div className='mt-2 d-flex flex-wrap justify-content-between'>
+              {!facebook && <div onClick={() => setfacebook(true)} className='border col-5 col-md-3 py-2 bg-primary text-white rounded-5  btn '>+ facebook</div>}
+              {!linkedin && <div onClick={() => { setLinkedin(true) }} className='border col-5 col-md-3 py-2 bg-primary text-white rounded-5  btn '>+ linkdin</div>}
+              {!website && <div onClick={() => setWebsite(true)} className='border col-5 col-md-3 py-2 bg-primary text-white rounded-5  btn '>+ website</div>}
 
             </div>
           </div>

@@ -8,10 +8,11 @@ export default function About() {
             <div className="container">
                 <div className="row">
                     <div className="d-md-flex justify-contnet-between align-items-center mb-5 " id='about'>
-                        <div className="col-md-7 ">
+                        <div data-aos="zoom-in" data-aos-duration='2000'
+                            className="col-md-7 ">
                             <img src={img} style={{ width: '100%' }} />
                         </div>
-                        <div className="col-md-5">
+                        <div data-aos="fade-right" data-aos-duration='2000' className="col-md-5">
                             <h6 className='text-center'>ABout Us</h6>
                             <h2 className={`${style.about}`}>Elevate Your Career with Professional Resumes and Cover Letters!</h2>
                             <p>At "CVMaker"

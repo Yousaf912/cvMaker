@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar/Sidebar';
 import { useLocation } from 'react-router-dom';
 import PersonInfo from './Personalinfo/PersonInfo';
@@ -19,13 +19,37 @@ export default function MainPart() {
     'skills': <Skills />,
     'finalize': <Finalize />
   }
-  const element = obj[name]
+  const element = obj[name];
+  const [isMdScreen, setIsMdScreen] = useState(false);
 
+
+  useEffect(() => {
+    
+    const mdBreakpoint = 768;
+    const handleResize = () => {
+      if (window.innerWidth >= mdBreakpoint) {
+        setIsMdScreen(true);
+      } else {
+        setIsMdScreen(false); 
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  console.log(isMdScreen);
+  
   return (
     < div className='position-relative'>
       {spiner && <Spinner />}
-      <div className='d-flex'>
+      <div className='d-md-flex'>
+       {isMdScreen &&
         <Sidebar />
+       }
+      
         <div style={{ marginLeft: "20%" }}>
 
           {element}

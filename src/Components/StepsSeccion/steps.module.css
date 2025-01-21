@@ -6,6 +6,7 @@
 .card{
     background-blend-mode: darken;
     background-color: rgba(216, 224, 235, 0.3);
+    transition: transform 2s ease;
 }
 .crdicon{
     width: 60px;
@@ -17,4 +18,12 @@
     background: linear-gradient(130deg, #3eadc9, #506bc2  );
     outline: none;
     border: none;
+    transition: transform 1s ease;
+}
+.card:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.main button:hover{
+    transform: scale(1.2);
 }

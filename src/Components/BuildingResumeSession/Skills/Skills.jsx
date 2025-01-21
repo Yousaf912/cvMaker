@@ -204,13 +204,13 @@ export default function Skills() {
             <h4>Choose from our pre-written examples below or write your own. Tell us your experirnce where do you skills </h4>
             <div className=''>
 
-                <div className='  d-flex justify-content-between flex-wrap mt-4'>
-                    <div className='col-5'>
+                <div className='  d-md-flex justify-content-between flex-wrap mt-4'>
+                    <div className='col-md-5'>
                         <h6>Skill name</h6>
                         <input name='title' value={data.title} onChange={getdata} type="text" placeholder='Mern stack developwmt ...' style={{ width: '100%' }} />
                         {eror.title && <p className='text-danger'>*{eror.title.message}</p>}
                     </div>
-                    <div className='col-5'>
+                    <div className='col-md-5'>
                         <h6>Rate your skill</h6>
                         <select value={data.rate} name="rate" onChange={getdata} style={{ width: '100%' }}>
                             <option selected disabled>Select</option>
@@ -221,7 +221,7 @@ export default function Skills() {
                         </select>
                         {eror.rate && <p className='text-danger'>*{eror.rate.message}</p>}
                     </div>
-                    <div className='col-5 mt-4'>
+                    <div className='col-md-5 mt-4'>
                         <h6>About Skill</h6>
                         <textarea name='description' value={data.description} onChange={getdata} rows={5} style={{ width: '100%' }} />
                         {eror.description && <p className='text-danger'>*{eror.description.message}</p>}
@@ -241,9 +241,9 @@ export default function Skills() {
                     }
                 </div>
                 {userSkills.length != 0 &&
-                    <div className={`d-flex flex-wrap justify-content-between  `}>
+                    <div className={`d-md-flex flex-wrap justify-content-between  `}>
                         {userSkills.map((val, i) =>
-                            <div key={i} className='d-flex flex-column col-5 '>
+                            <div key={i} className='d-flex flex-column col-md-5 '>
 
                                 <div className={`mt-3  border-3 rounded-4  p-2 shadow ${style.educationlist} `}>
 
