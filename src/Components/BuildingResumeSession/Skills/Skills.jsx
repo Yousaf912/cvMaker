@@ -198,7 +198,7 @@ export default function Skills() {
 
 
     return (
-        <div className={` ${style.education} mt-4 p-3  `} style={{height:'100%'}}>
+        <div className={` ${style.education} mt-4 p-3  `} >
             <ToastContainer />
             <h1>What skills would you like to highlight?</h1>
             <h4>Choose from our pre-written examples below or write your own. Tell us your experirnce where do you skills </h4>
