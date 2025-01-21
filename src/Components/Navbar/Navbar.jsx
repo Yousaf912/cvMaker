@@ -25,8 +25,8 @@ export default function Navbar() {
         dispatch(setSpinner(true));
         setTimeout(() => {
             localStorage.removeItem('token');
-            toast.success('LogOut successfully')
             dispatch(setSpinner(false));
+            window.location.reload();
         }, 1000);
 
     }

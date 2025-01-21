@@ -33,7 +33,7 @@ export default function TempleteOne() {
         PdfDownload('divtodownload', name)
     }
 
-    console.log(alldata);
+
     
  
 
@@ -204,7 +204,7 @@ export default function TempleteOne() {
                             </div>
 
                         </div>
-                        <button onClick={() => pdfdownload(alldata.personalinfo[0].name)}>download</button>
+                        <button className='mt-4 mx-auto border-0 py-2 rounded-2 bg-primary text-white' onClick={() => pdfdownload(alldata.personalinfo[0].name)}>download</button>
 
                     </div>
                 </div>

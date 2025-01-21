@@ -50,7 +50,7 @@ export default function Home() {
     dispatch(setSpinner(true))
     setTimeout(() => {
 
-      if (id) {
+      if ( token&&id ) {
         navigate('/makeResume')
         dispatch(setSpinner(false))
       } else {

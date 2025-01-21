@@ -6,6 +6,7 @@ import Firstpage from '../BuildingResumeSession/MakeResumeFirstPage/firstpage.js
 import MainPart from '../BuildingResumeSession/MainPart.jsx';
 import { SelectTemplate } from '../BuildingResumeSession/Selecttemplate/SelectTemplate.jsx';
 const id = localStorage.getItem('userid');
+const token = localStorage.getItem('token');
 
 
 export const AllRoutes = createBrowserRouter([
@@ -43,23 +44,23 @@ export const AllRoutes = createBrowserRouter([
     },
     { 
         path:'/makeResume/personalinfo',
-        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
+        element:token && id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/education',
-        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
+        element: token && id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/experience',
-        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
+        element: token && id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/skills',
-        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
+        element: token && id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/finalize',
-        element:id?<MainPart/>: <Navigate to={'/login'}></Navigate>
+        element: token && id?<MainPart/>: <Navigate to={'/login'}></Navigate>
     },
     {
         path:'/makeResume/selectTemplate',

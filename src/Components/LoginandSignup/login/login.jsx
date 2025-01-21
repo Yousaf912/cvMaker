@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 const url = import.meta.env.VITE_FETCHING_URL;
+import { FaRegEye,FaRegEyeSlash } from "react-icons/fa6";
 
 export default function Login() {
-    const navigate =useNavigate()
+    const navigate = useNavigate();
+      const [show, setshow] = useState(false)
     const [data, setdata] = useState({
         email: '',
         password: '',
@@ -19,35 +21,36 @@ export default function Login() {
         })
     }
 
-    const login =async (e) => {
+    const login = async (e) => {
         e.preventDefault();
-        try{
-            await fetch(`${url}/login`,{
-                method:'POST',
-                headers:{
-                    "Content-Type":"application/json"
+        try {
+            await fetch(`${url}/login`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                body:JSON.stringify(data)
-            }).then(async(res)=>{
-                const fnal =await res.json();
-              
-                if(res.ok){
-                   await localStorage.setItem('token',fnal.token);
-                   navigate('/')
-                }else{
-                   toast.error(fnal.message)
-                    
+                body: JSON.stringify(data)
+            }).then(async (res) => {
+                const fnal = await res.json();
+
+                if (res.ok) {
+                    await localStorage.setItem('token', fnal.token);
+                   await navigate('/')
+                    window.location.reload()
+                } else {
+                    toast.error(fnal.message)
+
                 }
-                
+
             })
 
-          
-        }catch(er){throw er}
+
+        } catch (er) { throw er }
     }
 
     return (
         <div data-aos="zoom-in-up" data-aos-duration="2000" >
-           <ToastContainer/>
+            <ToastContainer />
             <h1 className='text-center text-white'>Login</h1>
             <div className='text-white mt-5'>
                 <form onSubmit={login}>
@@ -56,9 +59,16 @@ export default function Login() {
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                         <input name='email' onChange={getdata} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input name='password' onChange={getdata} type="password" className="form-control" id="exampleInputPassword1" />
+                    <div className='d-flex border rounded-2 bg-white '>
+                        <input value={data.password} required onChange={getdata} name='password' type={show ? 'text' : "password"} style={{ width: '90%', background: 'none', border: 'none', outline: 'none' }} />
+                        <div className=' text-primary text-center pt-1'>
+
+                            {show ?
+                                <FaRegEye onClick={() => setshow(!show)} className='fs-3 ms-2' style={{ cursor: 'pointer' }} /> :
+                                <FaRegEyeSlash onClick={() => setshow(!show)} className='fs-3 ms-2' style={{ cursor: 'pointer' }} />
+                            }
+                        </div>
+
                     </div>
 
                     <div className='text-center mt-5'>

@@ -16,7 +16,9 @@ export const SelectTemplate = () => {
     
 
     useEffect(()=>{
-        if(!id){
+
+        const token = localStorage.getItem('token');
+        if(!token && !id){
             navigate('/login')
         }
     },[])

@@ -8,6 +8,7 @@ import { IoMdMailOpen } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { TbWorldWww } from "react-icons/tb";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
+import { PdfDownload } from '../DownloadFunction'
 
 
 
@@ -24,8 +25,10 @@ export default function TempleteThree() {
         }
     }, [])
 
+    const pdfdownload = (name) => {
 
-    console.log(alldata);
+        PdfDownload('divtodownload', name)
+    }
 
 
 
@@ -34,7 +37,7 @@ export default function TempleteThree() {
             {alldata != undefined &&
                 <div className="row" style={{ overflow: 'hidden' }}>
                     <div className={` mb-5  mt-3 `} style={{ transform: `scale(${zoomvalue})`, transformOrigin: 'top' }}>
-                        <div className={`border mx-auto ${style.main}  d-flex `}>
+                        <div id='divtodownload' className={`border mx-auto ${style.main}  d-flex `}>
                             <div className="col-5 ps-4" style={{ backgroundColor: '#dbc08c' }}  >
                                 <div className={` ${style.imgdiv} col-3 `}>
                                     <img src={img} className='border  border-5 rounded-circle border-white' style={{ width: "100%" }} />
@@ -104,6 +107,7 @@ export default function TempleteThree() {
 
 
                             {/* ------------------------------------------------------about--------------- */}
+
                             <div className={`${style.secdiv} col-9 ps-5 py-4`}>
                                 <div className=' ms-5 ps-5 '>
                                     <h1 >{alldata.personalinfo[0].name} {alldata.personalinfo[0].surname}</h1>
@@ -112,64 +116,66 @@ export default function TempleteThree() {
 
 
                             </div>
+                            <div style={{ scale: '0.9' }}>
+                                {/* -------------------------------------------------------------------------- */}
+                                <div className={`${style.data} ps-3`}>
+                                    <div>
+                                        <h4>Discription</h4>
+                                        <p>{alldata.personalinfo[0].secdescription}</p>
+                                    </div>
 
-                            {/* -------------------------------------------------------------------------- */}
-                            <div className={`${style.data} ps-3`}>
-                                <div>
-                                    <h4>Discription</h4>
-                                    <p>{alldata.personalinfo[0].secdescription}</p>
+
+                                    {/* -----------------------------------Skills --------------------------------- */}
+                                    <div>
+                                        <h4>Skills</h4>
+                                        {alldata.skills.map((val, i) => {
+                                            return (
+
+                                                <div key={i} className='d-flex '>
+                                                    <div>
+                                                        <div className={`${style.dot} rounded`}></div>
+                                                        <div className=' ms-1 ' style={{ height: '25px ', borderLeftColor: '#8a5b04', borderLeft: '2px solid #8a5b04' }}></div>
+                                                    </div>
+                                                    <div className='ms-3'>
+                                                        <h4>{val.title}</h4>
+                                                        <h6>Rate: {val.rate}</h6>
+                                                        <p>{val.description}</p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+
+                                    </div>
+
+                                    {/* ------------------------------------ experience ----------------------------------------- */}
+
+                                    <div>
+                                        <h4>Job Experience</h4>
+                                        {alldata.experience.map((val, i) => {
+                                            return (
+                                                <div key={i}>
+                                                    <div className='d-flex  align-items-center'>
+                                                        <div className={`${style.dot} me-3 rounded`}></div>
+                                                        <h4>{val.title}</h4>
+                                                    </div>
+                                                    <div className='ms-3'>
+                                                        {val.startingDate} - {val.endDate}
+                                                        <p>Address:{val.address}</p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+
+                                    </div>
+
+
+
+
                                 </div>
-
-
-                                {/* -----------------------------------Skills --------------------------------- */}
-                                <div>
-                                    <h4>Skills</h4>
-                                    {alldata.skills.map((val, i) => {
-                                        return (
-
-                                            <div key={i} className='d-flex '>
-                                                <div>
-                                                    <div className={`${style.dot} rounded`}></div>
-                                                    <div className=' ms-1 ' style={{ height: '25px ', borderLeftColor: '#8a5b04', borderLeft: '2px solid #8a5b04' }}></div>
-                                                </div>
-                                                <div className='ms-3'>
-                                                    <h4>{val.title}</h4>
-                                                    <h6>Rate: {val.rate}</h6>
-                                                    <p>{val.description}</p>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-
-                                </div>
-
-                                {/* ------------------------------------ experience ----------------------------------------- */}
-
-                                <div>
-                                    <h4>Job Experience</h4>
-                                    {alldata.experience.map((val, i) => {
-                                        return (
-                                            <div key={i}>
-                                                <div className='d-flex  align-items-center'>
-                                                    <div className={`${style.dot} me-3 rounded`}></div>
-                                                    <h4>{val.title}</h4>
-                                                </div>
-                                                <div className='ms-3'>
-                                                    {val.startingDate} - {val.endDate}
-                                                    <p>Address:{val.address}</p>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-
-                                </div>
-
-
-
-
                             </div>
                         </div>
 
+                        <button className='mt-4 mx-auto border-0 py-2 rounded-2 bg-primary text-white' onClick={() => pdfdownload(alldata.personalinfo[0].name)}>download</button>
                     </div>
                 </div>}
             <div className={`${style.zoomdiv}  `}>
