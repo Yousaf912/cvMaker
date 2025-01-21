@@ -12,7 +12,7 @@ export const PdfDownload = (id, filename) => {
         };
 
         html2pdf().from(element).set(options).save().then(() => {
-            resolve("Download complete! File has been saved.");
+            resolve({message:'Download',id});
         }).catch((error) => {
             console.error("Download error:", error);
             reject("Error downloading file.");
