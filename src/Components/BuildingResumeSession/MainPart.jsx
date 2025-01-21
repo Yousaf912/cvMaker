@@ -43,14 +43,14 @@ export default function MainPart() {
   console.log(isMdScreen);
   
   return (
-    < div >
+    < div className='position-relative' style={{height:'100vh'}}>
       {spiner && <Spinner />}
       <div className='d-md-flex'>
        {isMdScreen &&
         <Sidebar />
        }
       
-        <div className='position-relative' style={{ marginLeft: isMdScreen && "20%", height:'100vh' }}>
+        <div  style={{ marginLeft: isMdScreen && "20%", height:'100%' }}>
 
           {element}
         </div>
