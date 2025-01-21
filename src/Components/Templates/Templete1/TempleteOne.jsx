@@ -28,9 +28,9 @@ export default function TempleteOne() {
         }
     }, [])
 
-    const pdfdownload = (name) => {
+    const pdfdownload =async (name) => {
 
-      const message =   PdfDownload('divtodownload', name);
+      const message =  await PdfDownload('divtodownload', name);
       console.log(message);
       
     }
