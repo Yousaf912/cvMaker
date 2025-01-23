@@ -28,12 +28,14 @@ export default function TempleteOne({download}) {
     }, [])
 
     const pdfdownload =async (name) => {
-
+        console.log(alldata.personalinfo[0].img)
       const message =  await download('divtodownload', name);
       console.log(message);
       
     }
 
+    
+    
 
     return (
         <div className='container' >

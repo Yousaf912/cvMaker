@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
 const url = import.meta.env.VITE_FETCHING_URL;
-import { FaRegEye,FaRegEyeSlash } from "react-icons/fa6";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 export default function Login() {
     const navigate = useNavigate();
-      const [show, setshow] = useState(false)
+    const [show, setshow] = useState(false)
     const [data, setdata] = useState({
         email: '',
         password: '',
@@ -35,7 +35,7 @@ export default function Login() {
 
                 if (res.ok) {
                     await localStorage.setItem('token', fnal.token);
-                   await navigate('/')
+                    await navigate('/')
                     window.location.reload()
                 } else {
                     toast.error(fnal.message)
@@ -59,10 +59,10 @@ export default function Login() {
                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                         <input name='email' onChange={getdata} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
                     </div>
+                    <p>Password</p>
                     <div className='d-flex border rounded-2 bg-white '>
                         <input value={data.password} required onChange={getdata} name='password' type={show ? 'text' : "password"} style={{ width: '90%', background: 'none', border: 'none', outline: 'none' }} />
                         <div className=' text-primary text-center pt-1'>
-
                             {show ?
                                 <FaRegEye onClick={() => setshow(!show)} className='fs-3 ms-2' style={{ cursor: 'pointer' }} /> :
                                 <FaRegEyeSlash onClick={() => setshow(!show)} className='fs-3 ms-2' style={{ cursor: 'pointer' }} />

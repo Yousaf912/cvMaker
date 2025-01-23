@@ -11,76 +11,77 @@ import { deleteImage } from '../../../firebasefunction';
 export default function Finalize() {
   const url = import.meta.env.VITE_FETCHING_URL;
   const id = localStorage.getItem('userid');
-  const [templte,settemplte]=useState('');
+  const [templte, settemplte] = useState('');
   const dispatch = useDispatch();
   const userdata = useSelector((state) => state.userData.data.userdata);
   const navigate = useNavigate()
 
-  console.log(id);
-  
 
-  const UpdateAllData =async()=>{
-    const newdata = {...userdata,
-      personalinfo:[],
-      education:[],
-      skills:[],
-      experience:[],
-      template:''
+
+  const UpdateAllData = async () => {
+    const newdata = {
+      ...userdata,
+      personalinfo: [],
+      education: [],
+      skills: [],
+      experience: [],
+      template: ''
     }
 
-    await fetch (`${url}/updatedata/${id}`,{
-      headers:{
-        'Content-Type':'application/json'
+    await fetch(`${url}/updatedata/${id}`, {
+      headers: {
+        'Content-Type': 'application/json'
       },
-      method:"PUT",
-      body:JSON.stringify(newdata)
-    }).then(async(res)=>{
+      method: "PUT",
+      body: JSON.stringify(newdata)
+    }).then(async (res) => {
       const fnal = await res.json();
-     if(fnal.message == 'updated'){
-      navigate('/')
-     }
-      
+      if (fnal.message == 'updated') {
+        navigate('/')
+      }
+
     })
-    
+
   }
 
   const PdfDownload = (id2, filename) => {
-      return new Promise((resolve, reject) => {
-          const element = document.getElementById(id2);
-          const options = {
-              filename: filename,
-              image: { type: "jpeg", quality: 0.98 },
-              html2canvas: { scale: 4 },
-              jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-          };
-  
-          html2pdf().from(element).set(options).save().then(() => {
-            setTimeout(() => {
-              
-              deleteImage(id)
-              UpdateAllData();
-            }, 1000);
-          }).catch((error) => {
-              console.error("Download error:", error);
-              reject("Error downloading file.");
-          });
+    return new Promise((resolve, reject) => {
+      const element = document.getElementById(id2);
+      const options = {
+        filename: filename,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 4,
+          useCORS: true,
+          logging: true,
+        },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      };
+
+      html2pdf().from(element).set(options).save().then(() => {
+        deleteImage();
+        UpdateAllData();
+      }).catch((error) => {
+        console.error("Download error:", error);
+        reject("Error downloading file.");
       });
+    });
   };
 
-  const template ={
-    "Template 1":<TempleteThree download={PdfDownload}/>,
-    "Template 2":<TempleteOne download={PdfDownload}/>
+  const template = {
+    "Template 1": <TempleteThree download={PdfDownload} />,
+    "Template 2": <TempleteOne download={PdfDownload} />
   }
   const element = template[templte]
 
   const getData = async () => {
     try {
       await fetch(`${url}/userdata/${id}`)
-      .then(async(res)=>{
-        const fnal =await res.json();
-        settemplte(fnal.userdata.template)
-       dispatch(setAllUserdata(fnal)) 
-      })
+        .then(async (res) => {
+          const fnal = await res.json();
+          settemplte(fnal.userdata.template)
+          dispatch(setAllUserdata(fnal))
+        })
 
     } catch (er) {
       console.log(er);
@@ -88,9 +89,9 @@ export default function Finalize() {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getData()
-  },[])
+  }, [])
 
 
 

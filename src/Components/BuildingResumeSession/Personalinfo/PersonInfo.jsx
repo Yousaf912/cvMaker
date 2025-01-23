@@ -98,7 +98,7 @@ export default function PersonInfo() {
           body: JSON.stringify(newdata)
         })
         const data = await updated.json();
-        console.log(data);
+      
         if (data.message == 'Validation failed') {
           dispatch(setSpinner(false));
           seterros(data.errors)
@@ -127,7 +127,7 @@ export default function PersonInfo() {
 
   return (
 
-    <div className={`${style.personinfo}   mt-5 px-3 mb-5`}  >
+    <div className={`${style.personinfo}   mt-5 px-3 mb-5 pb-5`}  >
       <ToastContainer />
       <h1> What’s the best way for employers to contact you?</h1>
       <h4>We suggest including an email and phone number.</h4>

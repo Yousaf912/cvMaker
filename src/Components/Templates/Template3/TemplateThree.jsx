@@ -30,6 +30,8 @@ export default function TempleteThree() {
         PdfDownload('divtodownload', name)
     }
 
+    console.log(alldata.personalinfo[0].img);
+    
 
 
     return (
