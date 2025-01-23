@@ -133,7 +133,10 @@ export default function TempleteOne({download}) {
                             {/* -------------------------------------  */}
 
                             <div className={`${style.scle} col-7  pt-2`}>
-                                <h3 className='name'>{alldata.personalinfo[0].name}  {alldata.personalinfo[0].surname}</h3>
+                                <div className='d-flex flex-row'>
+                                <h3 className='name'>{alldata.personalinfo[0].name} </h3>
+                                <h3 className='name'> {alldata.personalinfo[0].surname}</h3>
+                                </div>
 
                                 <div>
                                     <div className='border col-8 text-white ps-3 mt-2 ' style={{ backgroundColor: '#27384c' }}>
