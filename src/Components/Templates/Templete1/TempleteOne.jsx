@@ -135,7 +135,7 @@ export default function TempleteOne({download}) {
                             <div className={`${style.scle} col-7  pt-2`}>
                                 <div className='d-flex flex-row'>
                                 <h3 className='name'>{alldata.personalinfo[0].name} </h3>
-                                <h3 className='name'> {alldata.personalinfo[0].surname}</h3>
+                                
                                 </div>
 
                                 <div>
