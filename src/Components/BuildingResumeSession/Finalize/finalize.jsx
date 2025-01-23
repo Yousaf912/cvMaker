@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAllUserdata } from '../../ReduxStore/Userdata';
 import html2pdf from "html2pdf.js";
 import { useNavigate } from 'react-router-dom';
-import { deleteImage } from '../../../firebasefunction';
 
 export default function Finalize() {
   const url = import.meta.env.VITE_FETCHING_URL;
@@ -59,7 +58,6 @@ export default function Finalize() {
       };
 
       html2pdf().from(element).set(options).save().then(() => {
-        deleteImage();
         UpdateAllData();
       }).catch((error) => {
         console.error("Download error:", error);

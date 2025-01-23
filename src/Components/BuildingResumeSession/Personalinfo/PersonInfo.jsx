@@ -6,7 +6,9 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify"
 import { useDispatch, useSelector } from 'react-redux';
 import { setSpinner } from '../../ReduxStore/Spinner';
-import { uploadImage } from '../../../firebasefunction';
+import { setimg } from '../../ReduxStore/setimg';
+
+
 
 
 export default function PersonInfo() {
@@ -17,8 +19,10 @@ export default function PersonInfo() {
   const id = localStorage.getItem('userid')
   const navigate = useNavigate()
   const url = import.meta.env.VITE_FETCHING_URL;
-  const [imege, setimg] = useState()
   const dispatch = useDispatch();
+  const imege = useSelector((state) => state.img.img);
+
+
 
   const [allfieldData, setAllFieldData] = useState({
     name: '',
@@ -33,7 +37,6 @@ export default function PersonInfo() {
     website: '',
     description: '',
     secdescription: '',
-    img: ''
   });
 
 
@@ -85,43 +88,49 @@ export default function PersonInfo() {
   }
 
   const sendAllData = async () => {
-    dispatch(setSpinner(true));
-    const newdata = await { ...allfieldData, img: imege }
+    if (imege) {
 
-    setTimeout(async () => {
-      try {
-        const updated = await fetch(`${url}/addpersonalinfo/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newdata)
-        })
-        const data = await updated.json();
-      
-        if (data.message == 'Validation failed') {
-          dispatch(setSpinner(false));
-          seterros(data.errors)
-        }
-        if (data.message == 'Added') {
-          dispatch(setSpinner(false));
-          navigate('/makeResume/education')
-        }
-      } catch (er) { throw er }
-    }, 1000);
+      dispatch(setSpinner(true));
+      const newdata = await { ...allfieldData, img: imege }
+
+      setTimeout(async () => {
+        try {
+          const updated = await fetch(`${url}/addpersonalinfo/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newdata)
+          })
+          const data = await updated.json();
+
+          if (data.message == 'Validation failed') {
+            dispatch(setSpinner(false));
+            seterros(data.errors)
+          }
+          if (data.message == 'Added') {
+            dispatch(setSpinner(false));
+            navigate('/makeResume/education')
+          }
+        } catch (er) { throw er }
+      }, 1000);
+    } else {
+      toast.error('Please select img')
+    }
+
   }
   const getimg = async (e) => {
     const file = e.target.files[0];
     if (file) {
       dispatch(setSpinner(true));
-      const imgurl = await uploadImage(file, id);
-      if (imgurl) {
-        console.log(imgurl);
-        dispatch(setSpinner(false));
-      }
-      setimg(imgurl);
+      const imgurl = URL.createObjectURL(file);
+      dispatch(setimg(imgurl))
+      dispatch(setSpinner(false));
+      dispatch(setimg(imgurl))
     }
   }
+
+
 
 
 

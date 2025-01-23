@@ -13,7 +13,8 @@ import { FaLinkedin, FaFacebookSquare } from "react-icons/fa";
 
 
 export default function TempleteOne({download}) {
-    const [alldata, setAllData] = useState()
+    const [alldata, setAllData] = useState();
+     const imege = useSelector((state)=>state.img.img);
     const zoomvalue = useSelector((state) => {
         return state.zoom.zoomlevel
     });
@@ -47,7 +48,7 @@ export default function TempleteOne({download}) {
                                 <div className={`${style.box} col-2 p-5`}>
                                 </div>
                                 <div className={`${style.imgdiv}  col-3 bg-white rounded-circle`}>
-                                    <img src={alldata.personalinfo[0].img} className=' border border-2 border-black rounded-circle' style={{ width: '100%', height: '100%' }} />
+                                    <img src={imege} className=' border border-2 border-black rounded-circle' style={{ width: '100%', height: '100%' }} />
                                 </div>
                                 <div className='mt-5 text-center'>
                                     <h3 >About Me </h3>
@@ -60,41 +61,41 @@ export default function TempleteOne({download}) {
                                     </div>
                                     <div className='mt-3 d-flex  '>
                                         <div className={` ${style.icondiv} rounded-circle text-center me-3`}>
-                                            <FaPhoneVolume className=' fs-4 mt-2' />
+                                            <FaPhoneVolume className=' fs-5 ' />
                                         </div>
                                         <p className='mt-1'>{alldata.personalinfo[0].number}</p>
                                     </div>
                                     <div className='mt-2 d-flex  '>
                                         <div className={` ${style.icondiv} rounded-circle text-center me-3`}>
-                                            <IoMdMailOpen className=' fs-4 mt-2' />
+                                            <IoMdMailOpen className=' fs-4 ' />
                                         </div>
                                         <p className='mt-1'>{alldata.personalinfo[0].email}</p>
                                     </div>
 
                                     <div className='mt-2 d-flex  '>
                                         <div className={` ${style.icondiv} rounded-circle text-center me-3`}>
-                                            <IoLocationOutline className=' fs-4 mt-2' />
+                                            <IoLocationOutline className=' fs-4 ' />
                                         </div>
                                         <p className='mt-1'>{alldata.personalinfo[0].address} {alldata.personalinfo[0].country} {alldata.personalinfo[0].postalcode} </p>
                                     </div>
                                     {alldata.personalinfo[0].website &&
                                         <div className='mt-2 d-flex  '>
                                             <div className={` ${style.icondiv} rounded-circle text-center me-3`}>
-                                                <TbWorldWww className=' fs-4 mt-2' />
+                                                <TbWorldWww className=' fs-4 ' />
                                             </div>
                                             <p className='mt-1'>{alldata.personalinfo[0].website}</p>
                                         </div>}
                                     {alldata.personalinfo[0].linkedin &&
                                         <div className='mt-2 d-flex  '>
                                             <div className={` ${style.icondiv} rounded-circle text-center me-3`}>
-                                                <FaLinkedin className=' fs-4 mt-2' />
+                                                <FaLinkedin className=' fs-4' />
                                             </div>
                                             <p className='mt-1'>{alldata.personalinfo[0].linkedin}</p>
                                         </div>}
                                     {alldata.personalinfo[0].facebook &&
                                         <div className='mt-2 d-flex  '>
                                             <div className={` ${style.icondiv} rounded-circle text-center me-3`}>
-                                                <FaFacebookSquare className=' fs-4 mt-2' />
+                                                <FaFacebookSquare className=' fs-4 ' />
                                             </div>
                                             <p className='mt-1'>{alldata.personalinfo[0].facebook}</p>
                                         </div>}
@@ -132,7 +133,7 @@ export default function TempleteOne({download}) {
                             {/* -------------------------------------  */}
 
                             <div className={`${style.scle} col-7  pt-2`}>
-                                <h1 className='name'>{alldata.personalinfo[0].name} {alldata.personalinfo[0].surname}</h1>
+                                <h3 className='name'>{alldata.personalinfo[0].name}  {alldata.personalinfo[0].surname}</h3>
 
                                 <div>
                                     <div className='border col-8 text-white ps-3 mt-2 ' style={{ backgroundColor: '#27384c' }}>
