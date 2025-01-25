@@ -58,7 +58,7 @@ export default function Finalize() {
       };
 
       html2pdf().from(element).set(options).save().then(() => {
-        UpdateAllData();
+        // UpdateAllData();
       }).catch((error) => {
         console.error("Download error:", error);
         reject("Error downloading file.");
