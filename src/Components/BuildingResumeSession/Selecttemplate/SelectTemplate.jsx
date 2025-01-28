@@ -76,10 +76,10 @@ export const SelectTemplate = () => {
             <div className="container mt-5">
                 <ToastContainer />
                 <div className="row">
-                    <div className="position-relative d-flex justify-content-evenly flex-wrap">
+                    <div className="position-relative d-md-flex justify-content-evenly flex-wrap">
                         {data.map((val, i) => {
                             return (
-                                <div  onClick={() => select(val.name)} key={i} className={` ${templateName == val.name && 'border-3  border-success'} col-3 border rounded-3 d-flex flex-column justify-content-between `}>
+                                <div  onClick={() => select(val.name)} key={i} className={` ${templateName == val.name && 'mt-3 mt-md-0 border-3  border-success'} col-md-3 border rounded-3 d-flex flex-column justify-content-between `}>
                                     {templateName == val.name &&
                                         <div className='dot border bg-success text-white rounded-circle text-center position-absolute  ' style={{ height: '40px', width: '40px ' }}>
                                             <TiTickOutline className='fs-2' />
