@@ -9,13 +9,31 @@ import { toast, ToastContainer } from 'react-toastify';
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const [id,setid]=useState();
+    const [id, setid] = useState();
     const user = localStorage.getItem('token');
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const [isMdScreen, setIsMdScreen] = useState(false);
+    useEffect(() => {
 
-    useEffect(()=>{
+        const mdBreakpoint = 768;
+        const handleResize = () => {
+            if (window.innerWidth >= mdBreakpoint) {
+                setIsMdScreen(true);
+            } else {
+                setIsMdScreen(false);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+
+    useEffect(() => {
         setid(user)
-    },[user])
+    }, [user])
 
     const open = (name) => {
         navigate(`/${name}`)
@@ -32,22 +50,21 @@ export default function Navbar() {
     }
 
     return (
-        <div className="container-fluid">
-            <ToastContainer/>
-            <div className="container">
-                <div className="row">
-                    <div className={` ${style.navbar} mt-1  d-flex justify-content-between align-items-center`}>
-                        {/* --------------------------------- logo start ----------------------------- */}
-                        <div className={`position-relative  col-md-2 col-5  p-1 mt-1 `}>
-                            <div onClick={() => open('')} className={`d-flex align-items-center justify-content-evenly ${style.logodiv} `}>
-                                <HiOutlineNewspaper className={`fs-1 ${style.icon}`} />
-                                <h2 className={`${style.logo}`}>
-                                    CvMaker</h2>
-                            </div>
-
+        <div className="container">
+            <div className="row">
+                <div className={` ${style.navbar} mt-1  d-flex justify-content-around align-items-center`}>
+                    {/* --------------------------------- logo start ----------------------------- */}
+                    <div className={`position-relative  col-md-2 col-5  p-1 mt-1 `}>
+                        <div onClick={() => open('')} className={`d-flex align-items-center justify-content-evenly ${style.logodiv} `}>
+                            <HiOutlineNewspaper className={`fs-1 ${style.icon}`} />
+                            <h2 className={`${style.logo}`}>
+                                CvMaker</h2>
                         </div>
-                        {/* ------------------------------------ buttons----------------------------- */}
-                        <div className="col-6 mt-4 d-none d-md-block">
+
+                    </div>
+                    {/* ------------------------------------ buttons----------------------------- */}
+                    {isMdScreen &&
+                        <div className="col-6 mt-4">
                             <ul className='d-flex justify-content-evenly position-relative'>
                                 <li onClick={() => open('home')}>Home</li>
                                 <li onClick={() => open('templates')}>Templates</li>
@@ -58,22 +75,22 @@ export default function Navbar() {
                                     <a className='text-decoration-none' href="#contact">Contact Us</a>
                                 </li>
                             </ul>
-                        </div>
-                        <div className="col-lg-1 col-2">
-                            {id ?
-                                <button onClick={logout} className='btn px-4 '>
-                                    <NavLink className={style.nav} >LogOut</NavLink>
-                                </button> :
-                                <button className='btn px-4 '>
-                                    <NavLink className={style.nav} to={'/login'}>Login</NavLink>
-                                </button>
+                        </div>}
+                    <div className="col-lg-1 col-2">
+                        {id ?
+                            <button onClick={logout} className='btn px-4 '>
+                                <NavLink className={style.nav} >LogOut</NavLink>
+                            </button> :
+                            <button className='btn px-4 '>
+                                <NavLink className={style.nav} to={'/login'}>Login</NavLink>
+                            </button>
 
-                            }
+                        }
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     )
 }

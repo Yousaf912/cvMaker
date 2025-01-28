@@ -19,7 +19,7 @@ export default function ContectUs() {
             </div>
 
             <div  className={` ${style.contactinfo} position-absolute `} id='contact'>
-                <div data-aos="flip-up" data-aos-duration='2000' className="container">
+                <div  className="container">
                     <div className="row text-white">
                         <div className={`${style.centerdiv} rounded-4 p-3 mb-5 shadow-lg `}>
                             <h1 className='text-center mt-2'>Contact Us</h1>
